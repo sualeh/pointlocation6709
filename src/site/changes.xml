@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+  <properties>
+    <title>Point Location 6709</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <release version="1.0" date="2007-04-15">
+      <action dev="Sualeh Fatehi" type="add">
+        Added new formats for point locations, with a single static method for formatting.
+      </action>
+    </release>
+    <release version="1.0" date="2007-04-22">
+      <action dev="Sualeh Fatehi" type="fix">
+        Better error reporting.
+      </action>
+      <action dev="Sualeh Fatehi" type="add">
+        More ISO 6709:1983 compliant output formats.
+      </action>
+    </release>
+  </body>
+</document>
