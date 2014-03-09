@@ -56,6 +56,10 @@ public final class PointLocationParser
     {
       throw new ParserException("No point location value provided");
     }
+    if (!StringUtils.endsWith(representation, "/"))
+    {
+      throw new ParserException("Point location value must be terminated with /");
+    }
 
     PointLocationParser parser = new PointLocationParser();
     CoordinateParser coordinateParser = new CoordinateParser();
