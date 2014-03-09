@@ -433,6 +433,10 @@ public final class CoordinateParser
       minutesString = minutesString + fractionPart;
     }
     final double minutes = NumberUtils.toDouble(minutesString, 0);
+    if (Math.abs(minutes) >= 60D)
+    {
+      throw new ParserException("Too many minutes: " + representation);
+    }
 
     // Parse seconds
     String secondsString = "";
@@ -442,6 +446,10 @@ public final class CoordinateParser
       secondsString = secondsString + fractionPart;
     }
     final double seconds = NumberUtils.toDouble(secondsString, 0);
+    if (Math.abs(seconds) >= 60D)
+    {
+      throw new ParserException("Too many seconds: " + representation);
+    }
 
     final double angle = sign * (degrees + minutes / 60D + seconds / 3600D);
     return angle;
