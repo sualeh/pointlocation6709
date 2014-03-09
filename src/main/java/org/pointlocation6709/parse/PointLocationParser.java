@@ -26,7 +26,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.pointlocation6709.Latitude;
+import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
 /**
@@ -54,19 +56,58 @@ public final class PointLocationParser
       throw new ParserException("No point location value provided");
     }
 
-    final PointLocation pointLocation = null;
-
     PointLocationParser parser = new PointLocationParser();
     CoordinateParser coordinateParser = new CoordinateParser();
     // Split by group
     List<String> tokens = parser.split(representation);
+    if (tokens.size() > 4)
+    {
+      throw new ParserException("Cannot parse " + representation);
+    }
 
-    Latitude latitude;
-    if (tokens.size() > 1)
+    final Latitude latitude;
+    if (tokens.size() >= 1)
     {
       latitude = coordinateParser.parseLatitude(tokens.get(0));
     }
+    else
+    {
+      throw new ParserException("No latitude provided for " + representation);
+    }
 
+    final Longitude longitude;
+    if (tokens.size() >= 2)
+    {
+      longitude = coordinateParser.parseLongitude(tokens.get(1));
+    }
+    else
+    {
+      throw new ParserException("No longitude provided for " + representation);
+    }
+
+    final double altitude;
+    if (tokens.size() >= 3)
+    {
+      altitude = NumberUtils.toDouble(tokens.get(2));
+    }
+    else
+    {
+      altitude = 0;
+    }
+
+    final String crs;
+    if (tokens.size() >= 4)
+    {
+      crs = StringUtils.trimToEmpty(tokens.get(3));
+    }
+    else
+    {
+      crs = "";
+    }
+
+    final PointLocation pointLocation = new PointLocation(latitude,
+                                                          longitude,
+                                                          altitude);
     return pointLocation;
   }
 
