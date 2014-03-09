@@ -157,7 +157,7 @@ public final class CoordinateParser
       .matcher(coordinateString);
     while (matcherCompassDirection2.find())
     {
-      final String token = trimToEmpty(matcherCompassDirection2.group(2));
+      final String token = trimToEmpty(matcherCompassDirection2.group(1));
       if (token.equals("-"))
       {
         return -1;
@@ -422,11 +422,11 @@ public final class CoordinateParser
                                        Angle.Field.MINUTES.toString());
     final int indexOfSeconds = indexOf(representation,
                                        Angle.Field.SECONDS.toString());
-    if (indexOfDegrees > indexOfMinutes)
+    if (countMinutes > 0 && indexOfDegrees > indexOfMinutes)
     {
       throw new ParserException("Incorrectly formed angle - " + representation);
     }
-    if (indexOfMinutes > indexOfSeconds)
+    if (countSeconds > 0 && indexOfMinutes > indexOfSeconds)
     {
       throw new ParserException("Incorrectly formed angle - " + representation);
     }
