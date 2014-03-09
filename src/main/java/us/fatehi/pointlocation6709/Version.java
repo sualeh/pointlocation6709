@@ -33,7 +33,7 @@ public final class Version
 {
 
   private static final String PRODUCTNAME = "Point Location 6709"; //$NON-NLS-1$
-  private static final String VERSION = "3.4"; //$NON-NLS-1$
+  private static final String VERSION = "4.0"; //$NON-NLS-1$
 
   /**
    * Information about this product.
@@ -44,7 +44,7 @@ public final class Version
   {
     final StringBuffer about = new StringBuffer();
     about.append(getProductName()).append(" ").append(getVersion()) //$NON-NLS-1$
-      .append("\n").append("\u00A9 2007-2008 Sualeh Fatehi"); //$NON-NLS-1$ //$NON-NLS-2$
+      .append("\n").append("\u00A9 2007-2014 Sualeh Fatehi"); //$NON-NLS-1$ //$NON-NLS-2$
     return new String(about);
   }
 
