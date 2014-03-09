@@ -1,7 +1,7 @@
 /*
  *
  * Point Location 6709
- * http://sourceforge.net/projects/daylightchart
+ * http://github.com/sualeh/pointlocation6709
  * Copyright (c) 2007-2014, Sualeh Fatehi.
  *
  * This program is free software; you can redistribute it and/or

@@ -8,7 +8,7 @@
   </bannerLeft>
   <bannerRight>
     <name>Point Location 6709</name>
-    <href>http://sourceforge.net/projects/daylightchart</href>
+    <href>http://github.com/sualeh/pointlocation6709</href>
   </bannerRight>
   <body>
     <links>
@@ -40,7 +40,7 @@
         href="http://sourceforge.net/svn/?group_id=193171" />
       <item
         name="Project Page on SourceForge"
-        href="http://sourceforge.net/projects/daylightchart/" />
+        href="http://github.com/sualeh/pointlocation6709/" />
     </menu>
     ${reports}
   </body>
