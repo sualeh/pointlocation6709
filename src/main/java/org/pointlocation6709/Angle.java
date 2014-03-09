@@ -54,6 +54,16 @@ public class Angle
     }
 
     /**
+     * Description of the field.
+     * 
+     * @return Description of the field
+     */
+    public String getDescription()
+    {
+      return name().toLowerCase();
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @see java.lang.Enum#toString()
@@ -138,6 +148,7 @@ public class Angle
   /**
    * {@inheritDoc}
    */
+  @Override
   public final int compareTo(final Angle angle)
   {
     int comparison;
@@ -220,7 +231,7 @@ public class Angle
   {
     if (sexagesimalDegreeParts == null)
     {
-      sexagesimalDegreeParts = Utility.sexagesimalSplit(getDegrees());
+      sexagesimalDegreeParts = sexagesimalSplit(getDegrees());
     }
     return sexagesimalDegreeParts[field.ordinal()];
   }
@@ -315,7 +326,49 @@ public class Angle
     objectInputStream.defaultReadObject();
 
     // Set transient fields
-    sexagesimalDegreeParts = Utility.sexagesimalSplit(getDegrees());
+    sexagesimalDegreeParts = sexagesimalSplit(getDegrees());
+  }
+
+  /**
+   * Splits a double value into it's sexagesimal parts. Each part has
+   * the same sign as the provided value.
+   * 
+   * @param value
+   *        Value to split
+   * @return Split parts
+   */
+  private int[] sexagesimalSplit(final double value)
+  {
+    final double absValue = Math.abs(value);
+
+    int units;
+    int minutes;
+    int seconds;
+    final int sign = value < 0? -1: 1;
+
+    // Calculate absolute integer units
+    units = (int) Math.floor(absValue);
+    seconds = (int) Math.round((absValue - units) * 3600D);
+
+    // Calculate absolute integer minutes
+    minutes = seconds / 60; // Integer arithmetic
+    if (minutes == 60)
+    {
+      minutes = 0;
+      units++;
+    }
+
+    // Calculate absolute integer seconds
+    seconds = seconds % 60;
+
+    // Correct for sign
+    units = units * sign;
+    minutes = minutes * sign;
+    seconds = seconds * sign;
+
+    return new int[] {
+        units, minutes, seconds
+    };
   }
 
 }

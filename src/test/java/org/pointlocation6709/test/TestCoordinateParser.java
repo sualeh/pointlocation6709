@@ -5,11 +5,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.pointlocation6709.Angle;
+import org.pointlocation6709.Angle.Field;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
-import org.pointlocation6709.Angle.Field;
-import org.pointlocation6709.parser.CoordinateParser;
-import org.pointlocation6709.parser.ParserException;
+import org.pointlocation6709.parse.CoordinateParser;
+import org.pointlocation6709.parse.ParserException;
 
 public class TestCoordinateParser
 {
@@ -224,12 +224,15 @@ public class TestCoordinateParser
                           int minutes,
                           int seconds)
   {
-    assertEquals(string + " - degrees do not match", degrees, angle
-      .getField(Field.DEGREES));
-    assertEquals(string + " - minutes do not match", minutes, angle
-      .getField(Field.MINUTES));
-    assertEquals(string + " - seconds do not match", seconds, angle
-      .getField(Field.SECONDS));
+    assertEquals(string + " - degrees do not match",
+                 degrees,
+                 angle.getField(Field.DEGREES));
+    assertEquals(string + " - minutes do not match",
+                 minutes,
+                 angle.getField(Field.MINUTES));
+    assertEquals(string + " - seconds do not match",
+                 seconds,
+                 angle.getField(Field.SECONDS));
   }
 
   private void parseAndCheckLatitude(String string,
@@ -238,7 +241,7 @@ public class TestCoordinateParser
                                      int seconds)
     throws ParserException
   {
-    Latitude latitude = CoordinateParser.parseLatitude(string);
+    Latitude latitude = new CoordinateParser().parseLatitude(string);
     checkAngle(latitude, string, degrees, minutes, seconds);
   }
 
@@ -248,7 +251,7 @@ public class TestCoordinateParser
                                       int seconds)
     throws ParserException
   {
-    Longitude longitude = CoordinateParser.parseLongitude(string);
+    Longitude longitude = new CoordinateParser().parseLongitude(string);
     checkAngle(longitude, string, degrees, minutes, seconds);
   }
 

@@ -25,11 +25,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.pointlocation6709.Angle;
 import org.pointlocation6709.PointLocation;
-import org.pointlocation6709.parser.FormatterException;
-import org.pointlocation6709.parser.ParserException;
-import org.pointlocation6709.parser.PointLocationFormatType;
-import org.pointlocation6709.parser.PointLocationFormatter;
-import org.pointlocation6709.parser.PointLocationParser;
+import org.pointlocation6709.format.FormatterException;
+import org.pointlocation6709.format.PointLocationFormatType;
+import org.pointlocation6709.format.PointLocationFormatter;
+import org.pointlocation6709.parse.ParserException;
+import org.pointlocation6709.parse.PointLocationParser;
 
 /**
  * Location tests.

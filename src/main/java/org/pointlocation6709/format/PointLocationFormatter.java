@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709.parser;
+package org.pointlocation6709.format;
 
 
 import java.text.NumberFormat;

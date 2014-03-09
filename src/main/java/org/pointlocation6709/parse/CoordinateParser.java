@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709.parser;
+package org.pointlocation6709.parse;
 
 
 import java.util.ArrayList;
@@ -25,14 +25,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.pointlocation6709.Angle;
+import org.pointlocation6709.Angle.Field;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
-import org.pointlocation6709.Angle.Field;
-
-import antlr.RecognitionException;
-import antlr.TokenStreamException;
 
 /**
  * Parses objects from strings.
@@ -51,7 +49,7 @@ public final class CoordinateParser
 
     private final int sign;
 
-    private CompassDirection(int sign)
+    private CompassDirection(final int sign)
     {
       this.sign = sign;
     }
@@ -75,7 +73,7 @@ public final class CoordinateParser
    * @throws ParserException
    *         On an exception
    */
-  public static Latitude parseLatitude(final String latitudeString)
+  public Latitude parseLatitude(final String latitudeString)
     throws ParserException
   {
 
@@ -96,20 +94,7 @@ public final class CoordinateParser
     // 2. Attempt to parse in ISO 6709 format
     if (latitude == null)
     {
-      final AntlrPointLocationParser parser = PointLocationParser
-        .constructPointLocationParser(representation + "+");
-      try
-      {
-        latitude = parser.latitude();
-      }
-      catch (final RecognitionException e)
-      {
-        throw new ParserException("Error parsing \"" + representation + "\"", e);
-      }
-      catch (final TokenStreamException e)
-      {
-        throw new ParserException("Error parsing \"" + representation + "\"", e);
-      }
+      latitude = new Latitude(Angle.fromDegrees(parseISO6709Format(representation)));
     }
 
     return latitude;
@@ -124,7 +109,7 @@ public final class CoordinateParser
    * @throws ParserException
    *         On an exception
    */
-  public static Longitude parseLongitude(final String longitudeString)
+  public Longitude parseLongitude(final String longitudeString)
     throws ParserException
   {
 
@@ -145,26 +130,13 @@ public final class CoordinateParser
     // 2. Attempt to parse in ISO 6709 format
     if (longitude == null)
     {
-      final AntlrPointLocationParser parser = PointLocationParser
-        .constructPointLocationParser(representation + "+");
-      try
-      {
-        longitude = parser.longitude();
-      }
-      catch (final RecognitionException e)
-      {
-        throw new ParserException("Error parsing - " + representation, e);
-      }
-      catch (final TokenStreamException e)
-      {
-        throw new ParserException("Error parsing - " + representation, e);
-      }
+      longitude = new Longitude(Angle.fromDegrees(parseISO6709Format(representation)));
     }
 
     return longitude;
   }
 
-  private static String cleanupCoordinate(final String coordinateString)
+  private String cleanupCoordinate(final String coordinateString)
     throws ParserException
   {
     // Clean the representation, so that it can be parsed
@@ -172,7 +144,7 @@ public final class CoordinateParser
     {
       throw new ParserException("No value provided");
     }
-    String representation = coordinateString.trim();
+    final String representation = coordinateString.trim();
 
     boolean isIso6709Format = true;
 
@@ -208,7 +180,7 @@ public final class CoordinateParser
       Field.valueOf(parts.get(0).substring(0, parts.get(0).length() - 1));
       isIso6709Format = false;
     }
-    catch (IllegalArgumentException e)
+    catch (final IllegalArgumentException e)
     {
       // Is in ISO 6709 format
     }
@@ -230,7 +202,7 @@ public final class CoordinateParser
         {
           if (part.endsWith(field.toString()))
           {
-            int currentField = field.ordinal();
+            final int currentField = field.ordinal();
             for (int i = currentField; i < degreeParts.length; i++)
             {
               if (degreeParts[i] != null)
@@ -297,14 +269,14 @@ public final class CoordinateParser
         final String degreePart = degreeParts[i];
         try
         {
-          Double doubleValue = Double.valueOf(degreePart.trim());
+          final Double doubleValue = toDouble(degreePart.trim());
           angleFields[i] = sign * doubleValue;
           if (i > 0 && doubleValue != 0 &&
               angleFields[i - 1] != angleFields[i - 1].intValue())
           {
-            throw new ParserException(String
-              .format("Cannot use decimal parts when %s is also specified",
-                      Field.values()[i].name().toLowerCase()));
+            throw new ParserException(String.format("Cannot use decimal parts when %s are also specified",
+                                                    Field.values()[i]
+                                                      .getDescription()));
           }
         }
         catch (final NumberFormatException e)
@@ -317,9 +289,9 @@ public final class CoordinateParser
       double angleValue = 0D;
       if (angleFields != null)
       {
-        List<Double> angleFieldsReversed = Arrays.asList(angleFields);
+        final List<Double> angleFieldsReversed = Arrays.asList(angleFields);
         Collections.reverse(angleFieldsReversed);
-        for (Double part: angleFieldsReversed)
+        for (final Double part: angleFieldsReversed)
         {
           angleValue = angleValue / 60D + part.doubleValue();
         }
@@ -330,31 +302,7 @@ public final class CoordinateParser
 
   }
 
-  private static boolean hasSign(final String[] degreeParts)
-    throws ParserException
-  {
-    boolean hasSign = false;
-    for (String degreePart: degreeParts)
-    {
-      if (degreePart.equals("0"))
-      {
-        continue;
-      }
-      boolean degreePartHasSign = degreePart.trim().startsWith("+") ||
-                                  degreePart.trim().startsWith("-");
-      if (hasSign && degreePartHasSign)
-      {
-        throw new ParserException("Cannot specify the sign more than once");
-      }
-      if (degreePartHasSign)
-      {
-        hasSign = true;
-      }
-    }
-    return hasSign;
-  }
-
-  private static int getSign(final String[] degreeParts)
+  private int getSign(final String[] degreeParts)
   {
     int sign = 1;
     for (int i = 0; i < degreeParts.length; i++)
@@ -378,9 +326,142 @@ public final class CoordinateParser
     return sign;
   }
 
-  private CoordinateParser()
+  private boolean hasSign(final String[] degreeParts)
+    throws ParserException
   {
-    // Prevent instantiation
+    boolean hasSign = false;
+    for (final String degreePart: degreeParts)
+    {
+      if (degreePart.equals("0"))
+      {
+        continue;
+      }
+      final boolean degreePartHasSign = degreePart.trim().startsWith("+") ||
+                                        degreePart.trim().startsWith("-");
+      if (hasSign && degreePartHasSign)
+      {
+        throw new ParserException("Cannot specify the sign more than once");
+      }
+      if (degreePartHasSign)
+      {
+        hasSign = true;
+      }
+    }
+    return hasSign;
+  }
+
+  private double parseISO6709Format(final String representation)
+    throws ParserException
+  {
+    if (StringUtils.isBlank(representation))
+    {
+      throw new ParserException("No value provided");
+    }
+
+    // Find sign
+    int sign = 1;
+    final String signChar = StringUtils.left(representation, 1);
+    try
+    {
+      final CompassDirection compassDirection = CompassDirection
+        .valueOf(signChar.toUpperCase());
+      compassDirection.getSign();
+    }
+    catch (final IllegalArgumentException e)
+    {
+      if (signChar.equals("-"))
+      {
+        sign = -1;
+      }
+      else if (!signChar.equals("+"))
+      {
+        throw new ParserException("Cannot parse: " + representation);
+      }
+    }
+
+    final String[] split = StringUtils
+      .split(StringUtils.right(representation, representation.length() - 1),
+             ".");
+    if (split.length < 1 || split.length > 2)
+    {
+      throw new ParserException("Cannot parse: " + representation);
+    }
+    final String anglePart = split[0];
+    final String fractionPart;
+    if (split.length == 2)
+    {
+      fractionPart = "." + split[1];
+    }
+    else
+    {
+      fractionPart = "";
+    }
+
+    // Parse degrees
+    int degreeLength;
+    if (anglePart.length() % 2 == 0)
+    {
+      degreeLength = 2;
+    }
+    else
+    {
+      degreeLength = 3;
+    }
+    String degreesString = StringUtils.left(anglePart, degreeLength);
+    if (StringUtils.isBlank(degreesString))
+    {
+      throw new ParserException("Cannot parse: " + representation);
+    }
+    final boolean hasMinutes = anglePart.length() > degreeLength;
+    if (!hasMinutes)
+    {
+      degreesString = degreesString + fractionPart;
+    }
+    final double degrees = toDouble(degreesString);
+
+    // Parse minutes
+    String minutesString = "";
+    if (hasMinutes)
+    {
+      minutesString = StringUtils.substring(anglePart,
+                                            degreeLength,
+                                            degreeLength + 2);
+    }
+    final boolean hasSeconds = anglePart.length() > degreeLength + 2;
+    if (hasMinutes && !hasSeconds)
+    {
+      minutesString = minutesString + fractionPart;
+    }
+    final double minutes = NumberUtils.toDouble(minutesString, 0);
+
+    // Parse seconds
+    String secondsString = "";
+    if (hasSeconds)
+    {
+      secondsString = StringUtils.substring(anglePart, degreeLength + 2);
+      secondsString = secondsString + fractionPart;
+    }
+    final double seconds = NumberUtils.toDouble(secondsString, 0);
+
+    final double angle = sign * (degrees + minutes / 60D + seconds / 3600D);
+    return angle;
+  }
+
+  private double toDouble(final String representation)
+    throws ParserException
+  {
+    if (StringUtils.isBlank(representation))
+    {
+      throw new ParserException("Cannot parse: " + representation);
+    }
+    try
+    {
+      return Double.parseDouble(representation);
+    }
+    catch (final NumberFormatException nfe)
+    {
+      throw new ParserException("Cannot parse: " + representation);
+    }
   }
 
 }
