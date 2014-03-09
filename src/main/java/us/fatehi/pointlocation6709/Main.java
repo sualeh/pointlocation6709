@@ -52,7 +52,7 @@ public final class Main
   {
 
     System.out.println(Version.about());
-    System.out.println("ISO 6709:1983 geographic point location tester. ");
+    System.out.println("ISO 6709 geographic point location tester. ");
     System.out.println("For example, enter: +401213-0750015/");
     System.out.println("Enter a blank line to quit.");
     System.out.println("Starting. " + new Date());
@@ -63,7 +63,7 @@ public final class Main
     {
       try
       {
-        System.out.print("Enter an ISO 6709:1983 geographic point location: ");
+        System.out.print("Enter an ISO 6709 geographic point location: ");
         inputLine = in.readLine();
         // Parse and print location point
         final PointLocation pointLocation = PointLocationParser
@@ -74,7 +74,7 @@ public final class Main
       }
       catch (final ParserException e)
       {
-        System.err.println(e.getMessage());
+        System.out.println(e.getMessage());
       }
       catch (final FormatterException e)
       {
