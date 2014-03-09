@@ -64,7 +64,7 @@
           <archive>
             <index>true</index>
             <manifest>
-              <mainClass>org.pointlocation6709.Main</mainClass>
+              <mainClass>us.fatehi.pointlocation6709.Main</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
             <manifestEntries>
@@ -128,40 +128,5 @@
         </executions>
       </plugin>	      
     </plugins>
-    <pluginManagement>
-    	<plugins>
-    		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-    		<plugin>
-    			<groupId>org.eclipse.m2e</groupId>
-    			<artifactId>lifecycle-mapping</artifactId>
-    			<version>1.0.0</version>
-    			<configuration>
-    				<lifecycleMappingMetadata>
-    					<pluginExecutions>
-    						<pluginExecution>
-    							<pluginExecutionFilter>
-    								<groupId>
-    									org.apache.maven.plugins
-    								</groupId>
-    								<artifactId>
-    									maven-antlr-plugin
-    								</artifactId>
-    								<versionRange>
-    									[2.0-beta-1,)
-    								</versionRange>
-    								<goals>
-    									<goal>generate</goal>
-    								</goals>
-    							</pluginExecutionFilter>
-    							<action>
-    								<execute/>
-    							</action>
-    						</pluginExecution>
-    					</pluginExecutions>
-    				</lifecycleMappingMetadata>
-    			</configuration>
-    		</plugin>
-    	</plugins>
-    </pluginManagement>
   </build>
 </project>
