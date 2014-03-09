@@ -6,9 +6,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import us.fatehi.pointlocation6709.Angle;
+import us.fatehi.pointlocation6709.Angle.Field;
 import us.fatehi.pointlocation6709.Latitude;
 import us.fatehi.pointlocation6709.Longitude;
-import us.fatehi.pointlocation6709.Angle.Field;
 import us.fatehi.pointlocation6709.parse.CoordinateParser;
 import us.fatehi.pointlocation6709.parse.ParserException;
 
@@ -159,9 +159,12 @@ public class TestCoordinateParser
     parseAndCheckLongitude("+0483612.20", 48, 36, 12);
     parseAndCheckLongitude("48° 36\' 12.20\"", 48, 36, 12);
     parseAndCheckLongitude("+48° 36\' 12.20\"", 48, 36, 12);
+    parseAndCheckLongitude("+48°36\'12.20\"", 48, 36, 12);
     parseAndCheckLongitude("48.60333333333334°", 48, 36, 12);
     parseAndCheckLongitude("48.60333333333334° E", 48, 36, 12);
+    parseAndCheckLongitude("48.60333333333334°E", 48, 36, 12);
     parseAndCheckLongitude("48° 36\' 12.20\" E", 48, 36, 12);
+    parseAndCheckLongitude("48°36\'12.20\"E", 48, 36, 12);
 
     parseAndCheckLongitude("-0483612.20", -48, -36, -12);
     parseAndCheckLongitude("-48° 36\' 12.20\"", -48, -36, -12);
@@ -219,11 +222,11 @@ public class TestCoordinateParser
     parseAndCheckLongitude("12.20\" W", 0, 0, -12);
   }
 
-  private void checkAngle(Angle angle,
-                          String string,
-                          int degrees,
-                          int minutes,
-                          int seconds)
+  private void checkAngle(final Angle angle,
+                          final String string,
+                          final int degrees,
+                          final int minutes,
+                          final int seconds)
   {
     assertEquals(string + " - degrees do not match",
                  degrees,
@@ -236,23 +239,23 @@ public class TestCoordinateParser
                  angle.getField(Field.SECONDS));
   }
 
-  private void parseAndCheckLatitude(String string,
-                                     int degrees,
-                                     int minutes,
-                                     int seconds)
+  private void parseAndCheckLatitude(final String string,
+                                     final int degrees,
+                                     final int minutes,
+                                     final int seconds)
     throws ParserException
   {
-    Latitude latitude = new CoordinateParser().parseLatitude(string);
+    final Latitude latitude = new CoordinateParser().parseLatitude(string);
     checkAngle(latitude, string, degrees, minutes, seconds);
   }
 
-  private void parseAndCheckLongitude(String string,
-                                      int degrees,
-                                      int minutes,
-                                      int seconds)
+  private void parseAndCheckLongitude(final String string,
+                                      final int degrees,
+                                      final int minutes,
+                                      final int seconds)
     throws ParserException
   {
-    Longitude longitude = new CoordinateParser().parseLongitude(string);
+    final Longitude longitude = new CoordinateParser().parseLongitude(string);
     checkAngle(longitude, string, degrees, minutes, seconds);
   }
 

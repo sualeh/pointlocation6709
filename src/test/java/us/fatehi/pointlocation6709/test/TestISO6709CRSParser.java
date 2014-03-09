@@ -43,7 +43,7 @@ public class TestISO6709CRSParser
   public void crs()
     throws Exception
   {
-    final CoordinateParser parser = new CoordinateParser();
+    new CoordinateParser();
     for (final Entry<String, String> testCase: testCases.entrySet())
     {
       final String representation = testCase.getKey();

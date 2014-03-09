@@ -61,10 +61,10 @@ public final class PointLocationParser
       throw new ParserException("Point location value must be terminated with /");
     }
 
-    PointLocationParser parser = new PointLocationParser();
-    CoordinateParser coordinateParser = new CoordinateParser();
+    final PointLocationParser parser = new PointLocationParser();
+    final CoordinateParser coordinateParser = new CoordinateParser();
     // Split by group
-    List<String> tokens = parser.split(representation);
+    final List<String> tokens = parser.split(representation);
     if (tokens.size() != 4)
     {
       throw new ParserException("Cannot parse " + representation);
@@ -130,4 +130,5 @@ public final class PointLocationParser
 
     return tokens;
   }
+
 }

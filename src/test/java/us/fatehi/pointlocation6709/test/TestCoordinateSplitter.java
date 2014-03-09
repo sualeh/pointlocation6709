@@ -32,9 +32,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import us.fatehi.pointlocation6709.parse.PointLocationParser;
+import us.fatehi.pointlocation6709.parse.CoordinateParser;
 
-public class TestPointLocationSplitter
+public class TestCoordinateSplitter
 {
 
   private Map<String, String> testCases;
@@ -43,35 +43,35 @@ public class TestPointLocationSplitter
   public void setup()
   {
     testCases = new HashMap<>();
-    testCases.put("+40-075CRSxxxx/", "+40~-075~0~xxxx");
-    testCases.put("+40-075/", "+40~-075~0~");
-    testCases.put("+40.20361-75.00417CRSxxxx/", "+40.20361~-75.00417~0~xxxx");
-    testCases.put("+4012-07500CRSxxxx/", "+4012~-07500~0~xxxx");
-    testCases.put("+4012.22-07500.25CRSxxxx/", "+4012.22~-07500.25~0~xxxx");
-    testCases.put("+401213-0750015CRSxxxx/", "+401213~-0750015~0~xxxx");
-    testCases.put("+401213.1-0750015.1CRSxxxx/", "+401213.1~-0750015.1~0~xxxx");
 
-    testCases.put("+40-075+350CRSxxxx/", "+40~-075~+350~xxxx");
-    testCases.put("+40.20361-75.00417+350.517CRSxxxx/",
-                  "+40.20361~-75.00417~+350.517~xxxx");
-    testCases.put("+4012-07500-169.2CRSxxxx/", "+4012~-07500~-169.2~xxxx");
-    testCases.put("+4012.22-07500.25-169.2CRSxxxx/",
-                  "+4012.22~-07500.25~-169.2~xxxx");
-    testCases
-      .put("+401213-0750015+2.79CRSxxxx/", "+401213~-0750015~+2.79~xxxx");
-    testCases.put("+401213.1-0750015.1+2.79CRSxxxx/",
-                  "+401213.1~-0750015.1~+2.79~xxxx");
+    testCases.put("48° 36\' 12.20\"", "48~36~12.20");
+    testCases.put("+48° 36\' 12.20\"", "48~36~12.20");
+    testCases.put("48.60333333333334°", "48.60333333333334");
+    testCases.put("48.60333333333334° N", "48.60333333333334");
+    testCases.put("48° 36\' 12.20\" N", "48~36~12.20");
+
+    testCases.put("48°36\'12.20\"", "48~36~12.20");
+    testCases.put("+48°36\'12.20\"", "48~36~12.20");
+    testCases.put("48.60333333333334°", "48.60333333333334");
+    testCases.put("48.60333333333334°N", "48.60333333333334");
+    testCases.put("48°36\'12.20\"N", "48~36~12.20");
+
+    testCases.put("-0° 36\' 12.20\"", "0~36~12.20");
+    testCases.put("0° 36\' 12.20\" S", "0~36~12.20");
+
+    testCases.put("-0°36\'12.20\"", "0~36~12.20");
+    testCases.put("0°36\'12.20\"S", "0~36~12.20");
   }
 
   @Test
   public void split()
     throws Exception
   {
-    final Method method = PointLocationParser.class
-      .getDeclaredMethod("split", String.class);
+    final Method method = CoordinateParser.class
+      .getDeclaredMethod("splitHumanCoordinates", String.class);
     method.setAccessible(true);
 
-    final PointLocationParser parser = new PointLocationParser();
+    final CoordinateParser parser = new CoordinateParser();
     for (final Entry<String, String> testCase: testCases.entrySet())
     {
       final List<String> split = (List<String>) method

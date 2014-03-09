@@ -20,10 +20,21 @@
 package us.fatehi.pointlocation6709.parse;
 
 
+import static org.apache.commons.lang3.StringUtils.contains;
+import static org.apache.commons.lang3.StringUtils.countMatches;
+import static org.apache.commons.lang3.StringUtils.endsWithAny;
+import static org.apache.commons.lang3.StringUtils.indexOf;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.left;
+import static org.apache.commons.lang3.StringUtils.right;
+import static org.apache.commons.lang3.StringUtils.split;
+import static org.apache.commons.lang3.StringUtils.substring;
+import static org.apache.commons.lang3.StringUtils.trimToEmpty;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -31,7 +42,6 @@ import org.apache.commons.lang3.math.NumberUtils;
 import us.fatehi.pointlocation6709.Angle;
 import us.fatehi.pointlocation6709.Latitude;
 import us.fatehi.pointlocation6709.Longitude;
-import us.fatehi.pointlocation6709.Angle.Field;
 
 /**
  * Parses objects from strings.
@@ -65,6 +75,13 @@ public final class CoordinateParser
 
   }
 
+  private final Pattern patternAngleFields = Pattern
+    .compile("(\\d+\\.?\\d*)[\u00B0\'\"]\\b*");
+  private final Pattern patternCompassDirection1 = Pattern
+    .compile(".*([NSEW])");
+  private final Pattern patternCompassDirection2 = Pattern
+    .compile("([\\+\\-]).*");
+
   /**
    * Parses a string representation of the latitude.
    * 
@@ -77,35 +94,16 @@ public final class CoordinateParser
   public Latitude parseLatitude(final String latitudeString)
     throws ParserException
   {
-
-    final String representation = cleanupCoordinate(latitudeString);
-    Latitude latitude;
-
-    // 1. Attempt to parse as an angle
     try
     {
-      latitude = new Latitude(Angle.fromDegrees(Double
-        .parseDouble(representation)));
-    }
-    catch (final RuntimeException e)
-    {
-      latitude = null;
-    }
-
-    // 2. Attempt to parse in ISO 6709 format
-    try
-    {
-      if (latitude == null)
-      {
-        latitude = new Latitude(Angle.fromDegrees(parseISO6709Format(representation)));
-      }
+      final Latitude latitude = new Latitude(parseAngle(latitudeString));
+      return latitude;
     }
     catch (final RuntimeException e)
     {
       throw new ParserException("Cannot parse latitude: " + latitudeString);
     }
 
-    return latitude;
   }
 
   /**
@@ -120,262 +118,133 @@ public final class CoordinateParser
   public Longitude parseLongitude(final String longitudeString)
     throws ParserException
   {
-
-    final String representation = cleanupCoordinate(longitudeString);
-    Longitude longitude;
-
-    // 1. Attempt to parse as an angle
     try
     {
-      longitude = new Longitude(Angle.fromDegrees(Double
-        .parseDouble(representation)));
-    }
-    catch (final RuntimeException e)
-    {
-      longitude = null;
-    }
-
-    // 2. Attempt to parse in ISO 6709 format
-    try
-    {
-      if (longitude == null)
-      {
-        longitude = new Longitude(Angle.fromDegrees(parseISO6709Format(representation)));
-      }
+      final Longitude longitude = new Longitude(parseAngle(longitudeString));
+      return longitude;
     }
     catch (final RuntimeException e)
     {
       throw new ParserException("Cannot parse longitude: " + longitudeString);
     }
 
-    return longitude;
   }
 
-  private String cleanupCoordinate(final String coordinateString)
+  private int getISO6709HumanFormatSign(final String coordinateString)
     throws ParserException
   {
-    // Clean the representation, so that it can be parsed
-    if (StringUtils.isBlank(coordinateString))
+    // Look for compass points
+    final Matcher matcherCompassDirection1 = patternCompassDirection1
+      .matcher(coordinateString);
+    while (matcherCompassDirection1.find())
     {
-      throw new ParserException("No value provided");
-    }
-    final String representation = coordinateString.trim();
-
-    boolean isIso6709Format = true;
-
-    // Validate format
-    final int countDegrees = StringUtils.countMatches(representation,
-                                                      Angle.Field.DEGREES
-                                                        .toString());
-    final int countMinutes = StringUtils.countMatches(representation,
-                                                      Angle.Field.MINUTES
-                                                        .toString());
-    final int countSeconds = StringUtils.countMatches(representation,
-                                                      Angle.Field.SECONDS
-                                                        .toString());
-    if (countDegrees > 1 || countMinutes > 1 || countSeconds > 1)
-    {
-      throw new ParserException("Incorrectly formed angle - " +
-                                coordinateString);
-    }
-    if (countDegrees > 0 || countMinutes > 0 || countSeconds > 0)
-    {
-      isIso6709Format = false;
-    }
-
-    final List<String> parts = new ArrayList<String>(Arrays.asList(StringUtils
-      .split(representation, ' ')));
-    if (parts.size() > 1)
-    {
-      isIso6709Format = false;
-    }
-
-    try
-    {
-      Field.valueOf(parts.get(0).substring(0, parts.get(0).length() - 1));
-      isIso6709Format = false;
-    }
-    catch (final IllegalArgumentException e)
-    {
-      // Is in ISO 6709 format
-    }
-
-    CompassDirection compassDirection = null;
-    if (parts.size() > 4)
-    {
-      throw new ParserException("Incorrectly formed angle - " +
-                                coordinateString);
-    }
-
-    final String[] degreeParts = new String[3];
-    if (!isIso6709Format)
-    {
-      for (String part: parts)
-      {
-        part = part.trim();
-        for (final Field field: Field.values())
-        {
-          if (part.endsWith(field.toString()))
-          {
-            final int currentField = field.ordinal();
-            for (int i = currentField; i < degreeParts.length; i++)
-            {
-              if (degreeParts[i] != null)
-              {
-                throw new ParserException("Degree fields are out of order");
-              }
-            }
-            degreeParts[currentField] = part.substring(0, part.length() - 1);
-            break;
-          }
-        }
-      }
-      for (int i = 0; i < degreeParts.length; i++)
-      {
-        if (degreeParts[i] == null)
-        {
-          degreeParts[i] = "0";
-        }
-      }
-
+      final String token = trimToEmpty(matcherCompassDirection1.group(1))
+        .toUpperCase();
       try
       {
-        compassDirection = CompassDirection.valueOf(parts.get(parts.size() - 1)
-          .trim().toUpperCase());
+        final CompassDirection compassDirection = CompassDirection
+          .valueOf(token);
+        return compassDirection.getSign();
       }
       catch (final IllegalArgumentException e)
       {
-        compassDirection = null;
+        // Ignore
       }
     }
 
-    // Attempt to find the compass direction, and thus the sign of the
-    // angle
-    int sign = 1;
-    if (!isIso6709Format)
+    // Look for signs
+    final Matcher matcherCompassDirection2 = patternCompassDirection2
+      .matcher(coordinateString);
+    while (matcherCompassDirection2.find())
     {
-      final boolean hasSign = hasSign(degreeParts);
-
-      if (compassDirection != null && hasSign)
+      final String token = trimToEmpty(matcherCompassDirection2.group(2));
+      if (token.equals("-"))
       {
-        throw new ParserException("Corordinate cannot have a compass direction, as well as a signed angle");
-      }
-
-      if (compassDirection != null)
-      {
-        sign = compassDirection.getSign();
-      }
-      if (hasSign)
-      {
-        sign = getSign(degreeParts);
+        return -1;
       }
     }
 
-    if (isIso6709Format)
+    // No sign, or + found
+    return 1;
+  }
+
+  private boolean isLikelyISO6709Format(final String coordinateString)
+    throws ParserException
+  {
+    final String representation = trimToEmpty(coordinateString);
+    if (isBlank(representation))
     {
-      return coordinateString.trim();
+      throw new ParserException("No value provided");
+    }
+
+    final int countDegrees = countMatches(representation,
+                                          Angle.Field.DEGREES.toString());
+    final int countMinutes = countMatches(representation,
+                                          Angle.Field.MINUTES.toString());
+    final int countSeconds = countMatches(representation,
+                                          Angle.Field.SECONDS.toString());
+    if (countDegrees > 0 || countMinutes > 0 || countSeconds > 0)
+    {
+      return false;
+    }
+
+    if (endsWithAny(representation, "E", "W", "N", "S"))
+    {
+      return false;
+    }
+
+    return true;
+
+  }
+
+  private Angle parseAngle(final String angleString)
+    throws ParserException
+  {
+
+    final boolean isLikelyISO6709Format = isLikelyISO6709Format(angleString);
+
+    final List<String> coordinateTokens;
+    if (isLikelyISO6709Format)
+    {
+      coordinateTokens = parseISO6709Format(angleString);
     }
     else
     {
-      // Parse all the numbers
-      final Double[] angleFields = new Double[3];
-      for (int i = 0; i < degreeParts.length; i++)
-      {
-        final String degreePart = degreeParts[i];
-        try
-        {
-          final Double doubleValue = toDouble(degreePart.trim());
-          angleFields[i] = sign * doubleValue;
-          if (i > 0 && doubleValue != 0 &&
-              angleFields[i - 1] != angleFields[i - 1].intValue())
-          {
-            throw new ParserException(String.format("Cannot use decimal parts when %s are also specified",
-                                                    Field.values()[i]
-                                                      .getDescription()));
-          }
-        }
-        catch (final NumberFormatException e)
-        {
-          throw new ParserException("Incorrectly formed angle - " +
-                                    coordinateString);
-        }
-      }
-
-      double angleValue = 0D;
-      if (angleFields != null)
-      {
-        final List<Double> angleFieldsReversed = Arrays.asList(angleFields);
-        Collections.reverse(angleFieldsReversed);
-        for (final Double part: angleFieldsReversed)
-        {
-          angleValue = angleValue / 60D + part.doubleValue();
-        }
-      }
-
-      return String.valueOf(angleValue);
+      coordinateTokens = parseISO6709HumanFormat(angleString);
     }
-
-  }
-
-  private int getSign(final String[] degreeParts)
-  {
-    int sign = 1;
-    for (int i = 0; i < degreeParts.length; i++)
+    if (coordinateTokens == null || coordinateTokens.size() != 4)
     {
-      final String degreePart = degreeParts[i];
-      if (degreePart.equals("0"))
-      {
-        continue;
-      }
-      if (degreePart.trim().startsWith("-"))
-      {
-        sign = -1;
-      }
-      if (degreePart.trim().startsWith("+") ||
-          degreePart.trim().startsWith("-"))
-      {
-        // Strip the sign
-        degreeParts[i] = degreePart.trim().substring(1).trim();
-      }
+      throw new ParserException("Cannot parse " + angleString);
     }
-    return sign;
+
+    final int sign = NumberUtils.toInt(coordinateTokens.get(0), 1);
+    final double degrees = NumberUtils.toDouble(coordinateTokens.get(1), 0);
+    final double minutes = NumberUtils.toDouble(coordinateTokens.get(2), 0);
+    if (Math.abs(minutes) >= 60D)
+    {
+      throw new ParserException("Too many minutes: " + angleString);
+    }
+    final double seconds = NumberUtils.toDouble(coordinateTokens.get(3), 0);
+    if (Math.abs(seconds) >= 60D)
+    {
+      throw new ParserException("Too many seconds: " + angleString);
+    }
+
+    final double angle = sign * (degrees + minutes / 60D + seconds / 3600D);
+    return Angle.fromDegrees(angle);
   }
 
-  private boolean hasSign(final String[] degreeParts)
+  private List<String> parseISO6709Format(final String representation)
     throws ParserException
   {
-    boolean hasSign = false;
-    for (final String degreePart: degreeParts)
-    {
-      if (degreePart.equals("0"))
-      {
-        continue;
-      }
-      final boolean degreePartHasSign = degreePart.trim().startsWith("+") ||
-                                        degreePart.trim().startsWith("-");
-      if (hasSign && degreePartHasSign)
-      {
-        throw new ParserException("Cannot specify the sign more than once");
-      }
-      if (degreePartHasSign)
-      {
-        hasSign = true;
-      }
-    }
-    return hasSign;
-  }
-
-  private double parseISO6709Format(final String representation)
-    throws ParserException
-  {
-    if (StringUtils.isBlank(representation))
+    if (isBlank(representation))
     {
       throw new ParserException("No value provided");
     }
 
     // Find sign
     int sign = 1;
-    final String signChar = StringUtils.left(representation, 1);
+    final String signChar = left(representation, 1);
     try
     {
       final CompassDirection compassDirection = CompassDirection
@@ -394,9 +263,9 @@ public final class CoordinateParser
       }
     }
 
-    final String[] split = StringUtils
-      .split(StringUtils.right(representation, representation.length() - 1),
-             ".");
+    final String[] split = split(right(representation,
+                                       representation.length() - 1),
+                                 ".");
     if (split.length < 1 || split.length > 2)
     {
       throw new ParserException("Cannot parse: " + representation);
@@ -422,8 +291,8 @@ public final class CoordinateParser
     {
       degreeLength = 3;
     }
-    String degreesString = StringUtils.left(anglePart, degreeLength);
-    if (StringUtils.isBlank(degreesString))
+    String degreesString = left(anglePart, degreeLength);
+    if (isBlank(degreesString))
     {
       throw new ParserException("Cannot parse: " + representation);
     }
@@ -432,58 +301,134 @@ public final class CoordinateParser
     {
       degreesString = degreesString + fractionPart;
     }
-    final double degrees = toDouble(degreesString);
 
     // Parse minutes
-    String minutesString = "";
+    String minutesString = "0";
     if (hasMinutes)
     {
-      minutesString = StringUtils.substring(anglePart,
-                                            degreeLength,
-                                            degreeLength + 2);
+      minutesString = substring(anglePart, degreeLength, degreeLength + 2);
     }
     final boolean hasSeconds = anglePart.length() > degreeLength + 2;
     if (hasMinutes && !hasSeconds)
     {
       minutesString = minutesString + fractionPart;
     }
-    final double minutes = NumberUtils.toDouble(minutesString, 0);
-    if (Math.abs(minutes) >= 60D)
-    {
-      throw new ParserException("Too many minutes: " + representation);
-    }
 
     // Parse seconds
-    String secondsString = "";
+    String secondsString = "0";
     if (hasSeconds)
     {
-      secondsString = StringUtils.substring(anglePart, degreeLength + 2);
+      secondsString = substring(anglePart, degreeLength + 2);
       secondsString = secondsString + fractionPart;
     }
-    final double seconds = NumberUtils.toDouble(secondsString, 0);
-    if (Math.abs(seconds) >= 60D)
-    {
-      throw new ParserException("Too many seconds: " + representation);
-    }
 
-    final double angle = sign * (degrees + minutes / 60D + seconds / 3600D);
-    return angle;
+    final List<String> coordinateTokens = new ArrayList<>();
+    coordinateTokens.add(String.valueOf(sign));
+    coordinateTokens.add(String.valueOf(degreesString));
+    coordinateTokens.add(String.valueOf(minutesString));
+    coordinateTokens.add(String.valueOf(secondsString));
+
+    return coordinateTokens;
   }
 
-  private double toDouble(final String representation)
+  private List<String> parseISO6709HumanFormat(final String coordinateString)
     throws ParserException
   {
-    if (StringUtils.isBlank(representation))
+    final String representation = trimToEmpty(coordinateString);
+    if (isBlank(representation))
     {
-      throw new ParserException("Cannot parse: " + representation);
+      throw new ParserException("No value provided");
     }
-    try
+
+    validateHumanCoordinate(representation);
+    final List<String> angleParts = splitHumanCoordinates(representation);
+    final int sign = getISO6709HumanFormatSign(representation);
+
+    final List<String> coordinateTokens = new ArrayList<>();
+    coordinateTokens.add(String.valueOf(sign));
+
+    int anglePartsIndex = 0;
+    if (contains(representation, Angle.Field.DEGREES.toString()))
     {
-      return Double.parseDouble(representation);
+      coordinateTokens.add(angleParts.get(anglePartsIndex));
+      anglePartsIndex++;
     }
-    catch (final NumberFormatException nfe)
+    else
     {
-      throw new ParserException("Cannot parse: " + representation);
+      coordinateTokens.add("0");
+    }
+    if (contains(representation, Angle.Field.MINUTES.toString()))
+    {
+      coordinateTokens.add(angleParts.get(anglePartsIndex));
+      anglePartsIndex++;
+    }
+    else
+    {
+      coordinateTokens.add("0");
+    }
+    if (contains(representation, Angle.Field.SECONDS.toString()))
+    {
+      coordinateTokens.add(angleParts.get(anglePartsIndex));
+      anglePartsIndex++;
+    }
+    else
+    {
+      coordinateTokens.add("0");
+    }
+
+    return coordinateTokens;
+  }
+
+  private List<String> splitHumanCoordinates(final String coordinateString)
+    throws ParserException
+  {
+    final List<String> tokens = new ArrayList<>();
+
+    final Matcher matcherAngleFields = patternAngleFields
+      .matcher(coordinateString);
+    while (matcherAngleFields.find())
+    {
+      final String token = matcherAngleFields.group(1);
+      if (StringUtils.isNotBlank(token))
+      {
+        tokens.add(token);
+      }
+    }
+    if (tokens.size() > 3)
+    {
+      throw new ParserException("Too many parts in " + coordinateString);
+    }
+
+    return tokens;
+  }
+
+  private void validateHumanCoordinate(final String representation)
+    throws ParserException
+  {
+    final int countDegrees = countMatches(representation,
+                                          Angle.Field.DEGREES.toString());
+    final int countMinutes = countMatches(representation,
+                                          Angle.Field.MINUTES.toString());
+    final int countSeconds = countMatches(representation,
+                                          Angle.Field.SECONDS.toString());
+    if (countDegrees > 1 || countMinutes > 1 || countSeconds > 1)
+    {
+      throw new ParserException("Incorrectly formed angle - " + representation);
+    }
+
+    final int indexOfDegrees = indexOf(representation,
+                                       Angle.Field.DEGREES.toString());
+    final int indexOfMinutes = indexOf(representation,
+                                       Angle.Field.MINUTES.toString());
+    final int indexOfSeconds = indexOf(representation,
+                                       Angle.Field.SECONDS.toString());
+    if (indexOfDegrees > indexOfMinutes)
+    {
+      throw new ParserException("Incorrectly formed angle - " + representation);
+    }
+    if (indexOfMinutes > indexOfSeconds)
+    {
+      throw new ParserException("Incorrectly formed angle - " + representation);
     }
   }
 

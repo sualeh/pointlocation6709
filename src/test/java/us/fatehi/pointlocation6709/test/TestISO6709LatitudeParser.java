@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -53,8 +54,12 @@ public class TestISO6709LatitudeParser
       final String representation = testCase.getKey();
       final List<String> split = split(representation);
       final String latitudeString = split.get(0);
-      final double value = (double) method.invoke(parser, latitudeString);
-      assertEquals(representation, (double) testCase.getValue(), value, 1E-12);
+      final List<String> values = (List<String>) method.invoke(parser,
+                                                               latitudeString);
+      assertEquals(representation,
+                   testCase.getValue(),
+                   parseAngle(values),
+                   1E-12);
     }
   }
 
@@ -86,6 +91,17 @@ public class TestISO6709LatitudeParser
     testCases.put("N4012.22W07500.25CRSxxxx/", 40 + 12.22 / 60D);
     testCases.put("N401213W0750015CRSxxxx/", 40 + 12 / 60D + 13 / 3600D);
     testCases.put("N401213.1W0750015.1CRSxxxx/", 40 + 12 / 60D + 13.1 / 3600D);
+  }
+
+  private double parseAngle(final List<String> coordinateTokens)
+  {
+    final int sign = NumberUtils.toInt(coordinateTokens.get(0), 1);
+    final double degrees = NumberUtils.toDouble(coordinateTokens.get(1), 0);
+    final double minutes = NumberUtils.toDouble(coordinateTokens.get(2), 0);
+    final double seconds = NumberUtils.toDouble(coordinateTokens.get(3), 0);
+
+    final double angle = sign * (degrees + minutes / 60D + seconds / 3600D);
+    return angle;
   }
 
   private List<String> split(final String representation)
