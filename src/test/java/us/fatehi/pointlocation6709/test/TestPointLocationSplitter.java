@@ -43,13 +43,13 @@ public class TestPointLocationSplitter
   public void setup()
   {
     testCases = new HashMap<>();
-    testCases.put("+40-075CRSxxxx/", "+40~-075~xxxx");
-    testCases.put("+40-075/", "+40~-075");
-    testCases.put("+40.20361-75.00417CRSxxxx/", "+40.20361~-75.00417~xxxx");
-    testCases.put("+4012-07500CRSxxxx/", "+4012~-07500~xxxx");
-    testCases.put("+4012.22-07500.25CRSxxxx/", "+4012.22~-07500.25~xxxx");
-    testCases.put("+401213-0750015CRSxxxx/", "+401213~-0750015~xxxx");
-    testCases.put("+401213.1-0750015.1CRSxxxx/", "+401213.1~-0750015.1~xxxx");
+    testCases.put("+40-075CRSxxxx/", "+40~-075~0~xxxx");
+    testCases.put("+40-075/", "+40~-075~0~");
+    testCases.put("+40.20361-75.00417CRSxxxx/", "+40.20361~-75.00417~0~xxxx");
+    testCases.put("+4012-07500CRSxxxx/", "+4012~-07500~0~xxxx");
+    testCases.put("+4012.22-07500.25CRSxxxx/", "+4012.22~-07500.25~0~xxxx");
+    testCases.put("+401213-0750015CRSxxxx/", "+401213~-0750015~0~xxxx");
+    testCases.put("+401213.1-0750015.1CRSxxxx/", "+401213.1~-0750015.1~0~xxxx");
 
     testCases.put("+40-075+350CRSxxxx/", "+40~-075~+350~xxxx");
     testCases.put("+40.20361-75.00417+350.517CRSxxxx/",

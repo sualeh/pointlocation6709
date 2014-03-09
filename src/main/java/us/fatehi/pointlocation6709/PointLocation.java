@@ -22,11 +22,13 @@ package us.fatehi.pointlocation6709;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Coordinates (latitude, longitude and altitude) for a location. The
  * latitude, longitude and altitude can be parsed from and formatted to
- * the format defined in ISO 6709, "Standard representation of
- * latitude, longitude and altitude for geographic point locations".
+ * the format defined in ISO 6709, "Standard representation of latitude,
+ * longitude and altitude for geographic point locations".
  * 
  * @author Sualeh Fatehi
  */
@@ -39,6 +41,7 @@ public final class PointLocation
   private final Latitude latitude;
   private final Longitude longitude;
   private final double altitude;
+  private final String coordinateReferenceSystemIdentifier;
 
   /**
    * Constructor.
@@ -50,7 +53,7 @@ public final class PointLocation
    */
   public PointLocation(final Latitude latitude, final Longitude longitude)
   {
-    this(latitude, longitude, 0);
+    this(latitude, longitude, 0, "");
   }
 
   /**
@@ -62,10 +65,13 @@ public final class PointLocation
    *        Longitude
    * @param altitude
    *        Altitude
+   * @param coordinateReferenceSystemIdentifier
+   *        CRS identifier
    */
   public PointLocation(final Latitude latitude,
                        final Longitude longitude,
-                       final double altitude)
+                       final double altitude,
+                       final String coordinateReferenceSystemIdentifier)
   {
     if (latitude == null || longitude == null)
     {
@@ -74,19 +80,8 @@ public final class PointLocation
     this.latitude = latitude;
     this.longitude = longitude;
     this.altitude = altitude;
-  }
-
-  /**
-   * Copy constructor. Copies the value of a provided point location.
-   * 
-   * @param pointLocation
-   *        Location to copy the value from.
-   */
-  public PointLocation(final PointLocation pointLocation)
-  {
-    this(pointLocation.latitude,
-         pointLocation.longitude,
-         pointLocation.altitude);
+    this.coordinateReferenceSystemIdentifier = StringUtils
+      .trimToEmpty(coordinateReferenceSystemIdentifier);
   }
 
   /**
@@ -94,6 +89,7 @@ public final class PointLocation
    * 
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(final PointLocation pointLocation)
   {
     int comparison;
@@ -121,7 +117,7 @@ public final class PointLocation
     {
       return true;
     }
-    if (!super.equals(obj))
+    if (obj == null)
     {
       return false;
     }
@@ -132,6 +128,18 @@ public final class PointLocation
     final PointLocation other = (PointLocation) obj;
     if (Double.doubleToLongBits(altitude) != Double
       .doubleToLongBits(other.altitude))
+    {
+      return false;
+    }
+    if (coordinateReferenceSystemIdentifier == null)
+    {
+      if (other.coordinateReferenceSystemIdentifier != null)
+      {
+        return false;
+      }
+    }
+    else if (!coordinateReferenceSystemIdentifier
+      .equals(other.coordinateReferenceSystemIdentifier))
     {
       return false;
     }
@@ -171,6 +179,18 @@ public final class PointLocation
   }
 
   /**
+   * Coordinate reference system identifier. See <a
+   * href="https://en.wikipedia.org/wiki/Coordinate_reference_system">
+   * Spatial reference system</a>
+   * 
+   * @return CRS identifier
+   */
+  public String getCoordinateReferenceSystemIdentifier()
+  {
+    return coordinateReferenceSystemIdentifier;
+  }
+
+  /**
    * Latitude for this location. Northern latitudes are positive.
    * 
    * @return Latitude.
@@ -199,10 +219,16 @@ public final class PointLocation
   public int hashCode()
   {
     final int prime = 31;
-    int result = super.hashCode();
+    int result = 1;
     long temp;
     temp = Double.doubleToLongBits(altitude);
     result = prime * result + (int) (temp ^ temp >>> 32);
+    result = prime *
+             result +
+             (coordinateReferenceSystemIdentifier == null
+                                                         ? 0
+                                                         : coordinateReferenceSystemIdentifier
+                                                           .hashCode());
     result = prime * result + (latitude == null? 0: latitude.hashCode());
     result = prime * result + (longitude == null? 0: longitude.hashCode());
     return result;

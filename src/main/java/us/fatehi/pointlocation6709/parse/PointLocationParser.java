@@ -65,54 +65,21 @@ public final class PointLocationParser
     CoordinateParser coordinateParser = new CoordinateParser();
     // Split by group
     List<String> tokens = parser.split(representation);
-    if (tokens.size() > 4)
+    if (tokens.size() != 4)
     {
       throw new ParserException("Cannot parse " + representation);
     }
 
-    final Latitude latitude;
-    if (tokens.size() >= 1)
-    {
-      latitude = coordinateParser.parseLatitude(tokens.get(0));
-    }
-    else
-    {
-      throw new ParserException("No latitude provided for " + representation);
-    }
-
-    final Longitude longitude;
-    if (tokens.size() >= 2)
-    {
-      longitude = coordinateParser.parseLongitude(tokens.get(1));
-    }
-    else
-    {
-      throw new ParserException("No longitude provided for " + representation);
-    }
-
-    final double altitude;
-    if (tokens.size() >= 3)
-    {
-      altitude = NumberUtils.toDouble(tokens.get(2));
-    }
-    else
-    {
-      altitude = 0;
-    }
-
-    final String crs;
-    if (tokens.size() >= 4)
-    {
-      crs = StringUtils.trimToEmpty(tokens.get(3));
-    }
-    else
-    {
-      crs = "";
-    }
+    final Latitude latitude = coordinateParser.parseLatitude(tokens.get(0));
+    final Longitude longitude = coordinateParser.parseLongitude(tokens.get(1));
+    final double altitude = NumberUtils.toDouble(tokens.get(2));
+    final String coordinateReferenceSystemIdentifier = StringUtils
+      .trimToEmpty(tokens.get(3));
 
     final PointLocation pointLocation = new PointLocation(latitude,
                                                           longitude,
-                                                          altitude);
+                                                          altitude,
+                                                          coordinateReferenceSystemIdentifier);
     return pointLocation;
   }
 
@@ -121,6 +88,7 @@ public final class PointLocationParser
   private final Pattern patternCRS = Pattern.compile(".*CRS(.*)\\/");
 
   private List<String> split(final String representation)
+    throws ParserException
   {
     final List<String> tokens = new ArrayList<>();
 
@@ -128,23 +96,36 @@ public final class PointLocationParser
       .matcher(representation);
     while (matcherCoordinates.find())
     {
-      // group 0 is always the entire match
       final String token = matcherCoordinates.group(1);
       if (StringUtils.isNotBlank(token))
       {
         tokens.add(token);
       }
     }
+    if (tokens.size() < 2)
+    {
+      throw new ParserException("Latitude and longitude need to be provided in " +
+                                representation);
+    }
+    if (tokens.size() == 2)
+    {
+      // Add altitude
+      tokens.add("0");
+    }
 
     final Matcher matcherCRS = patternCRS.matcher(representation);
     while (matcherCRS.find())
     {
-      // group 0 is always the entire match
       final String token = matcherCRS.group(1);
       if (StringUtils.isNotBlank(token))
       {
         tokens.add(token);
       }
+    }
+    if (tokens.size() == 3)
+    {
+      // Add CRS
+      tokens.add("");
     }
 
     return tokens;
