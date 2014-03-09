@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709.test;
+package us.fatehi.pointlocation6709.test;
 
 
 import static org.junit.Assert.assertEquals;
@@ -31,7 +31,8 @@ import java.util.Map.Entry;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.pointlocation6709.parse.PointLocationParser;
+
+import us.fatehi.pointlocation6709.parse.PointLocationParser;
 
 public class TestPointLocationSplitter
 {

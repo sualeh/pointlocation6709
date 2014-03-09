@@ -1,15 +1,16 @@
-package org.pointlocation6709.test;
+package us.fatehi.pointlocation6709.test;
 
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.pointlocation6709.Angle;
-import org.pointlocation6709.Angle.Field;
-import org.pointlocation6709.Latitude;
-import org.pointlocation6709.Longitude;
-import org.pointlocation6709.parse.CoordinateParser;
-import org.pointlocation6709.parse.ParserException;
+
+import us.fatehi.pointlocation6709.Angle;
+import us.fatehi.pointlocation6709.Latitude;
+import us.fatehi.pointlocation6709.Longitude;
+import us.fatehi.pointlocation6709.Angle.Field;
+import us.fatehi.pointlocation6709.parse.CoordinateParser;
+import us.fatehi.pointlocation6709.parse.ParserException;
 
 public class TestCoordinateParser
 {

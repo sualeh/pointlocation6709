@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709;
+package us.fatehi.pointlocation6709;
 
 
 import java.io.Serializable;

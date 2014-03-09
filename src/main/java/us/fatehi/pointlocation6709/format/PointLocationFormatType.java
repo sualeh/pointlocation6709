@@ -17,60 +17,24 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709.parse;
+package us.fatehi.pointlocation6709.format;
 
 
 /**
- * Parser exception.
+ * Types of formatting for point locations.
  * 
- * @author Sualeh Fatehi
+ * @author sfatehi
  */
-public class ParserException
-  extends Exception
+public enum PointLocationFormatType
 {
 
-  private static final long serialVersionUID = -8091140656979529951L;
-
-  /**
-   * Constructor.
-   */
-  public ParserException()
-  {
-  }
-
-  /**
-   * Constructor.
-   * 
-   * @param message
-   *        Exception message
-   */
-  public ParserException(final String message)
-  {
-    super(message);
-  }
-
-  /**
-   * Constructor.
-   * 
-   * @param message
-   *        Exception message
-   * @param cause
-   *        Exception cause
-   */
-  public ParserException(final String message, final Throwable cause)
-  {
-    super(message, cause);
-  }
-
-  /**
-   * Constructor.
-   * 
-   * @param cause
-   *        Exception cause
-   */
-  public ParserException(final Throwable cause)
-  {
-    super(cause);
-  }
+  /** Decimal format */
+  DECIMAL,
+  /** Long format */
+  LONG,
+  /** Medium format */
+  MEDIUM,
+  /** Short format */
+  SHORT;
 
 }

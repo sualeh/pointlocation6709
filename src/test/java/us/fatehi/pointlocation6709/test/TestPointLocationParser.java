@@ -17,19 +17,20 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709.test;
+package us.fatehi.pointlocation6709.test;
 
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.pointlocation6709.Angle;
-import org.pointlocation6709.PointLocation;
-import org.pointlocation6709.format.FormatterException;
-import org.pointlocation6709.format.PointLocationFormatType;
-import org.pointlocation6709.format.PointLocationFormatter;
-import org.pointlocation6709.parse.ParserException;
-import org.pointlocation6709.parse.PointLocationParser;
+
+import us.fatehi.pointlocation6709.Angle;
+import us.fatehi.pointlocation6709.PointLocation;
+import us.fatehi.pointlocation6709.format.FormatterException;
+import us.fatehi.pointlocation6709.format.PointLocationFormatType;
+import us.fatehi.pointlocation6709.format.PointLocationFormatter;
+import us.fatehi.pointlocation6709.parse.ParserException;
+import us.fatehi.pointlocation6709.parse.PointLocationParser;
 
 public class TestPointLocationParser
 {

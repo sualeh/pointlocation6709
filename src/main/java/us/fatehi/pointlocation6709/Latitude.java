@@ -17,24 +17,42 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709.format;
+package us.fatehi.pointlocation6709;
 
 
 /**
- * Types of formatting for point locations.
+ * Represents a latitude in degrees or radians.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
-public enum PointLocationFormatType
+public final class Latitude
+  extends Angle
 {
 
-  /** Decimal format */
-  DECIMAL,
-  /** Long format */
-  LONG,
-  /** Medium format */
-  MEDIUM,
-  /** Short format */
-  SHORT;
+  private static final long serialVersionUID = -1048509855080052523L;
+
+  /**
+   * Copy constructor. Copies the value of a provided angle.
+   * 
+   * @param angle
+   *        Angle to copy the value from.
+   */
+  public Latitude(final Angle angle)
+  {
+    super(angle, 90);
+  }
+
+  @Override
+  protected String getDirection()
+  {
+    if (getRadians() < 0)
+    {
+      return "S";
+    }
+    else
+    {
+      return "N";
+    }
+  }
 
 }

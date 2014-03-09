@@ -17,19 +17,19 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709;
+package us.fatehi.pointlocation6709;
 
 
 /**
- * Represents a latitude in degrees or radians.
+ * Represents a longitude in degrees or radians.
  * 
  * @author Sualeh Fatehi
  */
-public final class Latitude
+public final class Longitude
   extends Angle
 {
 
-  private static final long serialVersionUID = -1048509855080052523L;
+  private static final long serialVersionUID = -8615691791807614256L;
 
   /**
    * Copy constructor. Copies the value of a provided angle.
@@ -37,9 +37,17 @@ public final class Latitude
    * @param angle
    *        Angle to copy the value from.
    */
-  public Latitude(final Angle angle)
+  public Longitude(final Angle angle)
   {
-    super(angle, 90);
+    super(angle, 180);
+
+    final double degrees = getDegrees();
+    if (degrees == 180)
+    {
+      throw new IllegalArgumentException("According to the ISO6709:1983 standard, " +
+                                         "the 180th meridian is always negative " +
+                                         "(180" + Field.DEGREES + " W)");
+    }
   }
 
   @Override
@@ -47,11 +55,11 @@ public final class Latitude
   {
     if (getRadians() < 0)
     {
-      return "S";
+      return "W";
     }
     else
     {
-      return "N";
+      return "E";
     }
   }
 

@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709.format;
+package us.fatehi.pointlocation6709.parse;
 
 
 /**
@@ -25,7 +25,7 @@ package org.pointlocation6709.format;
  * 
  * @author Sualeh Fatehi
  */
-public class FormatterException
+public class ParserException
   extends Exception
 {
 
@@ -34,7 +34,7 @@ public class FormatterException
   /**
    * Constructor.
    */
-  public FormatterException()
+  public ParserException()
   {
   }
 
@@ -44,7 +44,7 @@ public class FormatterException
    * @param message
    *        Exception message
    */
-  public FormatterException(final String message)
+  public ParserException(final String message)
   {
     super(message);
   }
@@ -57,7 +57,7 @@ public class FormatterException
    * @param cause
    *        Exception cause
    */
-  public FormatterException(final String message, final Throwable cause)
+  public ParserException(final String message, final Throwable cause)
   {
     super(message, cause);
   }
@@ -68,7 +68,7 @@ public class FormatterException
    * @param cause
    *        Exception cause
    */
-  public FormatterException(final Throwable cause)
+  public ParserException(final Throwable cause)
   {
     super(cause);
   }

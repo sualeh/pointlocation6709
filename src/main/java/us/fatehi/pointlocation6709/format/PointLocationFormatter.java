@@ -17,15 +17,15 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709.format;
+package us.fatehi.pointlocation6709.format;
 
 
 import java.text.NumberFormat;
 
-import org.pointlocation6709.Angle;
-import org.pointlocation6709.Latitude;
-import org.pointlocation6709.Longitude;
-import org.pointlocation6709.PointLocation;
+import us.fatehi.pointlocation6709.Angle;
+import us.fatehi.pointlocation6709.Latitude;
+import us.fatehi.pointlocation6709.Longitude;
+import us.fatehi.pointlocation6709.PointLocation;
 
 /**
  * Formats point locations to strings.

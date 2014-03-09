@@ -17,50 +17,60 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709;
+package us.fatehi.pointlocation6709.format;
 
 
 /**
- * Represents a longitude in degrees or radians.
+ * Parser exception.
  * 
  * @author Sualeh Fatehi
  */
-public final class Longitude
-  extends Angle
+public class FormatterException
+  extends Exception
 {
 
-  private static final long serialVersionUID = -8615691791807614256L;
+  private static final long serialVersionUID = -8091140656979529951L;
 
   /**
-   * Copy constructor. Copies the value of a provided angle.
-   * 
-   * @param angle
-   *        Angle to copy the value from.
+   * Constructor.
    */
-  public Longitude(final Angle angle)
+  public FormatterException()
   {
-    super(angle, 180);
-
-    final double degrees = getDegrees();
-    if (degrees == 180)
-    {
-      throw new IllegalArgumentException("According to the ISO6709:1983 standard, " +
-                                         "the 180th meridian is always negative " +
-                                         "(180" + Field.DEGREES + " W)");
-    }
   }
 
-  @Override
-  protected String getDirection()
+  /**
+   * Constructor.
+   * 
+   * @param message
+   *        Exception message
+   */
+  public FormatterException(final String message)
   {
-    if (getRadians() < 0)
-    {
-      return "W";
-    }
-    else
-    {
-      return "E";
-    }
+    super(message);
+  }
+
+  /**
+   * Constructor.
+   * 
+   * @param message
+   *        Exception message
+   * @param cause
+   *        Exception cause
+   */
+  public FormatterException(final String message, final Throwable cause)
+  {
+    super(message, cause);
+  }
+
+  /**
+   * Constructor.
+   * 
+   * @param cause
+   *        Exception cause
+   */
+  public FormatterException(final Throwable cause)
+  {
+    super(cause);
   }
 
 }

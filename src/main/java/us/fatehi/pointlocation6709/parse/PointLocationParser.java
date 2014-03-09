@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709.parse;
+package us.fatehi.pointlocation6709.parse;
 
 
 import java.util.ArrayList;
@@ -27,9 +27,10 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.pointlocation6709.Latitude;
-import org.pointlocation6709.Longitude;
-import org.pointlocation6709.PointLocation;
+
+import us.fatehi.pointlocation6709.Latitude;
+import us.fatehi.pointlocation6709.Longitude;
+import us.fatehi.pointlocation6709.PointLocation;
 
 /**
  * Parses objects from strings.

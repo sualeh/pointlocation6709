@@ -17,15 +17,16 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package org.pointlocation6709.test;
+package us.fatehi.pointlocation6709.test;
 
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.pointlocation6709.Angle;
-import org.pointlocation6709.Latitude;
-import org.pointlocation6709.Longitude;
+
+import us.fatehi.pointlocation6709.Angle;
+import us.fatehi.pointlocation6709.Latitude;
+import us.fatehi.pointlocation6709.Longitude;
 
 /**
  * Location tests.
