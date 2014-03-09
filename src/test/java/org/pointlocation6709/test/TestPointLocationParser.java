@@ -486,7 +486,7 @@ public class TestPointLocationParser
     assertEquals("+40.0-180.0/", formattedPointLocationString2);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = ParserException.class)
   public void pointLocationBoundary_2()
     throws ParserException, FormatterException
   {

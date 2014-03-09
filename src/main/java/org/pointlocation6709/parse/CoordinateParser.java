@@ -92,9 +92,16 @@ public final class CoordinateParser
     }
 
     // 2. Attempt to parse in ISO 6709 format
-    if (latitude == null)
+    try
     {
-      latitude = new Latitude(Angle.fromDegrees(parseISO6709Format(representation)));
+      if (latitude == null)
+      {
+        latitude = new Latitude(Angle.fromDegrees(parseISO6709Format(representation)));
+      }
+    }
+    catch (final RuntimeException e)
+    {
+      throw new ParserException("Cannot parse latitude: " + latitudeString);
     }
 
     return latitude;
@@ -128,9 +135,16 @@ public final class CoordinateParser
     }
 
     // 2. Attempt to parse in ISO 6709 format
-    if (longitude == null)
+    try
     {
-      longitude = new Longitude(Angle.fromDegrees(parseISO6709Format(representation)));
+      if (longitude == null)
+      {
+        longitude = new Longitude(Angle.fromDegrees(parseISO6709Format(representation)));
+      }
+    }
+    catch (final RuntimeException e)
+    {
+      throw new ParserException("Cannot parse longitude: " + longitudeString);
     }
 
     return longitude;
