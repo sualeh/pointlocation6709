@@ -61,21 +61,33 @@ public class TestISO6709LongitudeParser
   public void setup()
   {
     testCases = new HashMap<>();
-    testCases.put("+40-075CRSxxxx/", -75D);
-    testCases.put("+40-075/", -75D);
-    testCases.put("+40.20361-75.00417CRSxxxx/", -75.00417);
-    testCases.put("+4012-07500CRSxxxx/", -75D);
-    testCases.put("+4012.22-07500.25CRSxxxx/", -75 - 0.25 / 60D);
-    testCases.put("+401213-0750015CRSxxxx/", -75 - 0 / 60D - 15 / 3600D);
-    testCases.put("+401213.1-0750015.1CRSxxxx/", -75 - 0 / 60D - 15.1 / 3600D);
 
-    testCases.put("+40-075+350CRSxxxx/", -75D);
-    testCases.put("+40.20361-75.00417+350.517CRSxxxx/", -75.00417);
-    testCases.put("+4012-07500-169.2CRSxxxx/", -75D);
-    testCases.put("+4012.22-07500.25-169.2CRSxxxx/", -75 - 0.25 / 60D);
-    testCases.put("+401213-0750015+2.79CRSxxxx/", -75 - 0 / 60D - 15 / 3600D);
-    testCases.put("+401213.1-0750015.1+2.79CRSxxxx/", -75 - 0 / 60D - 15.1 /
-                                                      3600D);
+// testCases.put("+40-075CRSxxxx/", -75D);
+// testCases.put("+40-075/", -75D);
+// testCases.put("+40.20361-75.00417CRSxxxx/", -75.00417);
+// testCases.put("+4012-07500CRSxxxx/", -75D);
+// testCases.put("+4012.22-07500.25CRSxxxx/", -75 - 0.25 / 60D);
+// testCases.put("+401213-0750015CRSxxxx/", -75 - 0 / 60D - 15 / 3600D);
+// testCases.put("+401213.1-0750015.1CRSxxxx/", -75 - 0 / 60D - 15.1 /
+// 3600D);
+//
+// testCases.put("+40-075+350CRSxxxx/", -75D);
+// testCases.put("+40.20361-75.00417+350.517CRSxxxx/", -75.00417);
+// testCases.put("+4012-07500-169.2CRSxxxx/", -75D);
+// testCases.put("+4012.22-07500.25-169.2CRSxxxx/", -75 - 0.25 / 60D);
+// testCases.put("+401213-0750015+2.79CRSxxxx/", -75 - 0 / 60D - 15 /
+// 3600D);
+// testCases.put("+401213.1-0750015.1+2.79CRSxxxx/", -75 - 0 / 60D -
+// 15.1 /
+// 3600D);
+//
+// testCases.put("N40W075CRSxxxx/", -75D);
+// testCases.put("N40W075/", -75D);
+// testCases.put("N40.20361W75.00417CRSxxxx/", -75.00417);
+// testCases.put("N4012W07500CRSxxxx/", -75D);
+// testCases.put("N4012.22W07500.25CRSxxxx/", -75 - 0.25 / 60D);
+    testCases.put("N401213W0750015CRSxxxx/", -75 - 0 / 60D - 15 / 3600D);
+    testCases.put("N401213.1W0750015.1CRSxxxx/", -75 - 0 / 60D - 15.1 / 3600D);
   }
 
   private List<String> split(final String representation)

@@ -379,7 +379,7 @@ public final class CoordinateParser
     {
       final CompassDirection compassDirection = CompassDirection
         .valueOf(signChar.toUpperCase());
-      compassDirection.getSign();
+      sign = compassDirection.getSign();
     }
     catch (final IllegalArgumentException e)
     {

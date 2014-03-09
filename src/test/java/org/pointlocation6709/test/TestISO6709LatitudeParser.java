@@ -61,6 +61,7 @@ public class TestISO6709LatitudeParser
   public void setup()
   {
     testCases = new HashMap<>();
+
     testCases.put("+40-075CRSxxxx/", 40D);
     testCases.put("+40-075/", 40D);
     testCases.put("+40.20361-75.00417CRSxxxx/", 40.20361);
@@ -76,6 +77,14 @@ public class TestISO6709LatitudeParser
     testCases.put("+401213-0750015+2.79CRSxxxx/", 40 + 12 / 60D + 13 / 3600D);
     testCases.put("+401213.1-0750015.1+2.79CRSxxxx/", 40 + 12 / 60D + 13.1 /
                                                       3600D);
+
+    testCases.put("N40W075CRSxxxx/", 40D);
+    testCases.put("N40W075/", 40D);
+    testCases.put("N40.20361W75.00417CRSxxxx/", 40.20361);
+    testCases.put("N4012W07500CRSxxxx/", 40 + 12 / 60D);
+    testCases.put("N4012.22W07500.25CRSxxxx/", 40 + 12.22 / 60D);
+    testCases.put("N401213W0750015CRSxxxx/", 40 + 12 / 60D + 13 / 3600D);
+    testCases.put("N401213.1W0750015.1CRSxxxx/", 40 + 12 / 60D + 13.1 / 3600D);
   }
 
   private List<String> split(final String representation)
