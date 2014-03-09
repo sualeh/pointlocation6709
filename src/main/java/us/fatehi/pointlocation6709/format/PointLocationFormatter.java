@@ -36,7 +36,7 @@ public final class PointLocationFormatter
 {
 
   /**
-   * Formats a point location as an ISO 6709:1983 string.
+   * Formats a point location as an ISO 6709 string.
    * 
    * @param pointLocation
    *        Point location to format
@@ -82,7 +82,7 @@ public final class PointLocationFormatter
   }
 
   /**
-   * Formats a latitude as an ISO 6709:1983 string.
+   * Formats a latitude as an ISO 6709 string.
    * 
    * @param latitude
    *        Latitude to format
@@ -128,7 +128,7 @@ public final class PointLocationFormatter
   }
 
   /**
-   * Formats a longitude as an ISO 6709:1983 string.
+   * Formats a longitude as an ISO 6709 string.
    * 
    * @param longitude
    *        Longitude to format
@@ -198,7 +198,7 @@ public final class PointLocationFormatter
     }
     else if (angle instanceof Longitude)
     {
-      // According to the ISO6709:1983 standard,
+      // According to the ISO6709 standard,
       // the 180th meridian is negative
       if (intDegrees == 180)
       {
@@ -217,7 +217,7 @@ public final class PointLocationFormatter
   }
 
   /**
-   * Formats a point location as an ISO 6709:1983 string.
+   * Formats a point location as an ISO 6709 string.
    * 
    * @param pointLocation
    *        Point location to format
@@ -238,7 +238,7 @@ public final class PointLocationFormatter
   }
 
   /**
-   * Formats a point location as an ISO 6709:1983 string.
+   * Formats a point location as an ISO 6709 string.
    * 
    * @param pointLocation
    *        Point location to format
@@ -259,7 +259,7 @@ public final class PointLocationFormatter
   }
 
   /**
-   * Formats a point location as an ISO 6709:1983 string.
+   * Formats a point location as an ISO 6709 string.
    * 
    * @param pointLocation
    *        Point location to format
@@ -280,8 +280,7 @@ public final class PointLocationFormatter
   }
 
   /**
-   * Formats a point location as an ISO 6709:1983 string, using
-   * decimals.
+   * Formats a point location as an ISO 6709 string, using decimals.
    * 
    * @param pointLocation
    *        Point location to format
