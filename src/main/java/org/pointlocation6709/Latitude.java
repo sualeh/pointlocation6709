@@ -1,6 +1,6 @@
 /* 
  * 
- * Daylight Chart
+ * Point Location 6709
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2014, Sualeh Fatehi.
  * 

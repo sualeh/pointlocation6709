@@ -1,6 +1,6 @@
 /* 
  * 
- * Daylight Chart
+ * Point Location 6709
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2014, Sualeh Fatehi.
  * 
@@ -31,9 +31,6 @@ import org.pointlocation6709.format.PointLocationFormatter;
 import org.pointlocation6709.parse.ParserException;
 import org.pointlocation6709.parse.PointLocationParser;
 
-/**
- * Location tests.
- */
 public class TestPointLocationParser
 {
 
@@ -478,8 +475,8 @@ public class TestPointLocationParser
     assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
     assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.SECONDS));
 
-    assertEquals(-180, pointLocation.getLongitude()
-      .getField(Angle.Field.DEGREES));
+    assertEquals(-180,
+                 pointLocation.getLongitude().getField(Angle.Field.DEGREES));
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.SECONDS));
 
