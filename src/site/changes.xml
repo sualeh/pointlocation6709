@@ -15,7 +15,7 @@
         Better error reporting.
       </action>
       <action dev="Sualeh Fatehi" type="add">
-        More ISO 6709:1983 compliant output formats.
+        More ISO 6709 compliant output formats.
       </action>
     </release>
   </body>

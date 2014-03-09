@@ -10,16 +10,16 @@
       <subsection name="About">
         Point Location 6709 is an LGPL licensed Java library for parsing and formatting
         geographic point locations in
-        <a href="http://en.wikipedia.org/wiki/ISO_6709">ISO 6709:1983</a>
+        <a href="http://en.wikipedia.org/wiki/ISO_6709">ISO 6709</a>
         format.
       </subsection>
       <subsection name="Running">
         Point Location 6709 depends on <a href="http://www.antlr.org/">ANTLR</a>
         for parsing geographic point locations in
-        <a href="http://en.wikipedia.org/wiki/ISO_6709">ISO 6709:1983</a>
+        <a href="http://en.wikipedia.org/wiki/ISO_6709">ISO 6709</a>
         format. Please download the ANTLR jar file, and make sure it
         is on your classpath, for compiling, and using the library. Point Location 6709
-        comes with a tester that allows you to test parsing of ISO 6709:1983 format
+        comes with a tester that allows you to test parsing of ISO 6709 format
         locations.
       </subsection>
     </section>

@@ -44,7 +44,7 @@ public final class Longitude
     final double degrees = getDegrees();
     if (degrees == 180)
     {
-      throw new IllegalArgumentException("According to the ISO6709:1983 standard, " +
+      throw new IllegalArgumentException("According to the ISO6709 standard, " +
                                          "the 180th meridian is always negative " +
                                          "(180" + Field.DEGREES + " W)");
     }

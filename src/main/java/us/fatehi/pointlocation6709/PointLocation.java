@@ -25,7 +25,7 @@ import java.io.Serializable;
 /**
  * Coordinates (latitude, longitude and altitude) for a location. The
  * latitude, longitude and altitude can be parsed from and formatted to
- * the format defined in ISO 6709:1983, "Standard representation of
+ * the format defined in ISO 6709, "Standard representation of
  * latitude, longitude and altitude for geographic point locations".
  * 
  * @author Sualeh Fatehi
