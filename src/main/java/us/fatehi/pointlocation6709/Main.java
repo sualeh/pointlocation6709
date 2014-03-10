@@ -70,7 +70,7 @@ public final class Main
           .parsePointLocation(inputLine);
         System.out.println(pointLocation);
         System.out.println(PointLocationFormatter
-          .formatIso6709(pointLocation, PointLocationFormatType.MEDIUM));
+          .formatISO6709(pointLocation, PointLocationFormatType.LONG));
       }
       catch (final ParserException e)
       {

@@ -242,10 +242,10 @@ public final class PointLocation
   @Override
   public String toString()
   {
-    String string = latitude.toString() + ", " + longitude.toString();
+    String string = latitude + " " + longitude;
     if (altitude != 0)
     {
-      string = string + ": " + altitude;
+      string = string + " " + String.format("%1$.3f", altitude);
     }
     return string;
   }

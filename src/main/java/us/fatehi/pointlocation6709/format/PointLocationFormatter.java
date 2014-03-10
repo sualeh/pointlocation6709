@@ -46,7 +46,7 @@ public final class PointLocationFormatter
    * @throws FormatterException
    *         On an exception
    */
-  public static String formatIso6709(final PointLocation pointLocation,
+  public static String formatISO6709(final PointLocation pointLocation,
                                      final PointLocationFormatType formatType)
     throws FormatterException
   {
@@ -59,25 +59,28 @@ public final class PointLocationFormatter
       throw new FormatterException("No format type provided");
     }
 
-    String formattedPointLocation = "";
+    final String formatted;
     switch (formatType)
     {
-      case DECIMAL:
-        formattedPointLocation = formatIso6709WithDecimals(pointLocation);
+      case HUMAN:
+        formatted = pointLocation.toString();
         break;
       case LONG:
-        formattedPointLocation = formatIso6709Long(pointLocation);
+        formatted = formatISO6709Long(pointLocation);
         break;
       case MEDIUM:
-        formattedPointLocation = formatIso6709Medium(pointLocation);
+        formatted = formatISO6709Medium(pointLocation);
         break;
       case SHORT:
-        formattedPointLocation = formatIso6709Short(pointLocation);
+        formatted = formatISO6709Short(pointLocation);
+        break;
+      case DECIMAL:
+        formatted = formatISO6709WithDecimals(pointLocation);
         break;
       default:
         throw new FormatterException("Unsupported format type");
     }
-    return formattedPointLocation;
+    return formatted;
 
   }
 
@@ -105,25 +108,28 @@ public final class PointLocationFormatter
       throw new FormatterException("No format type provided");
     }
 
-    String formattedPointLocation = "";
+    final String formatted;
     switch (formatType)
     {
-      case DECIMAL:
-        formattedPointLocation = formatLatitudeWithDecimals(latitude);
+      case HUMAN:
+        formatted = latitude.toString();
         break;
       case LONG:
-        formattedPointLocation = formatLatitudeLong(latitude);
+        formatted = formatLatitudeLong(latitude);
         break;
       case MEDIUM:
-        formattedPointLocation = formatLatitudeMedium(latitude);
+        formatted = formatLatitudeMedium(latitude);
         break;
       case SHORT:
-        formattedPointLocation = formatLatitudeShort(latitude);
+        formatted = formatLatitudeShort(latitude);
+        break;
+      case DECIMAL:
+        formatted = formatLatitudeWithDecimals(latitude);
         break;
       default:
         throw new FormatterException("Unsupported format type");
     }
-    return formattedPointLocation;
+    return formatted;
 
   }
 
@@ -151,39 +157,49 @@ public final class PointLocationFormatter
       throw new FormatterException("No format type provided");
     }
 
-    String formattedPointLocation = "";
+    final String formatted;
     switch (formatType)
     {
-      case DECIMAL:
-        formattedPointLocation = formatLongitudeWithDecimals(longitude);
+      case HUMAN:
+        formatted = longitude.toString();
         break;
       case LONG:
-        formattedPointLocation = formatLongitudeLong(longitude);
+        formatted = formatLongitudeLong(longitude);
         break;
       case MEDIUM:
-        formattedPointLocation = formatLongitudeMedium(longitude);
+        formatted = formatLongitudeMedium(longitude);
         break;
       case SHORT:
-        formattedPointLocation = formatLongitudeShort(longitude);
+        formatted = formatLongitudeShort(longitude);
+        break;
+      case DECIMAL:
+        formatted = formatLongitudeWithDecimals(longitude);
         break;
       default:
         throw new FormatterException("Unsupported format type");
     }
-    return formattedPointLocation;
+    return formatted;
 
+  }
+
+  private static String formatAltitudeWithSign(final double value)
+  {
+    if (Math.abs(value) > 1E-6)
+    {
+      return (Math.signum(value) < 0? "-": "+") +
+             getNumberFormat(1).format(Math.abs(value));
+    }
+    else
+    {
+      return "";
+    }
   }
 
   private static String formatDecimalMinutesString(final Angle angle)
   {
-    final int intDegrees = Math.abs(angle.getField(Angle.Field.DEGREES));
-    final double absMinutes = Math.abs(angle.getDegrees()) - intDegrees;
+    final double degrees = Math.abs(angle.getDegrees());
+    final double absMinutes = degrees - (int) degrees;
     return getNumberFormat(0).format(absMinutes);
-  }
-
-  private static String formatDoubleWithSign(final double value)
-  {
-    final String sign = value < 0? "-": "+";
-    return sign + getNumberFormat(1).format(Math.abs(value));
   }
 
   private static String formatIntegerDegreesString(final Angle angle)
@@ -223,17 +239,14 @@ public final class PointLocationFormatter
    *        Point location to format
    * @return Formatted string
    */
-  private static String formatIso6709Long(final PointLocation pointLocation)
+  private static String formatISO6709Long(final PointLocation pointLocation)
   {
     final Latitude latitude = pointLocation.getLatitude();
     final Longitude longitude = pointLocation.getLongitude();
     String string = formatLatitudeLong(latitude) +
                     formatLongitudeLong(longitude);
     final double altitude = pointLocation.getAltitude();
-    if (altitude != 0)
-    {
-      string = string + formatDoubleWithSign(altitude);
-    }
+    string = string + formatAltitudeWithSign(altitude);
     return string + "/";
   }
 
@@ -244,17 +257,14 @@ public final class PointLocationFormatter
    *        Point location to format
    * @return Formatted string
    */
-  private static String formatIso6709Medium(final PointLocation pointLocation)
+  private static String formatISO6709Medium(final PointLocation pointLocation)
   {
     final Latitude latitude = pointLocation.getLatitude();
     final Longitude longitude = pointLocation.getLongitude();
     String string = formatLatitudeMedium(latitude) +
                     formatLongitudeMedium(longitude);
     final double altitude = pointLocation.getAltitude();
-    if (altitude != 0)
-    {
-      string = string + formatDoubleWithSign(altitude);
-    }
+    string = string + formatAltitudeWithSign(altitude);
     return string + "/";
   }
 
@@ -265,17 +275,14 @@ public final class PointLocationFormatter
    *        Point location to format
    * @return Formatted string
    */
-  private static String formatIso6709Short(final PointLocation pointLocation)
+  private static String formatISO6709Short(final PointLocation pointLocation)
   {
     final Latitude latitude = pointLocation.getLatitude();
     final Longitude longitude = pointLocation.getLongitude();
     String string = formatLatitudeShort(latitude) +
                     formatLongitudeShort(longitude);
     final double altitude = pointLocation.getAltitude();
-    if (altitude != 0)
-    {
-      string = string + formatDoubleWithSign(altitude);
-    }
+    string = string + formatAltitudeWithSign(altitude);
     return string + "/";
   }
 
@@ -286,17 +293,14 @@ public final class PointLocationFormatter
    *        Point location to format
    * @return Formatted string
    */
-  private static String formatIso6709WithDecimals(final PointLocation pointLocation)
+  private static String formatISO6709WithDecimals(final PointLocation pointLocation)
   {
     final Latitude latitude = pointLocation.getLatitude();
     final Longitude longitude = pointLocation.getLongitude();
     String string = formatLatitudeWithDecimals(latitude) +
                     formatLongitudeWithDecimals(longitude);
     final double altitude = pointLocation.getAltitude();
-    if (altitude != 0)
-    {
-      string = string + formatDoubleWithSign(altitude);
-    }
+    string = string + formatAltitudeWithSign(altitude);
     return string + "/";
   }
 
@@ -385,7 +389,7 @@ public final class PointLocationFormatter
   {
     final NumberFormat numberFormat = NumberFormat.getInstance();
     numberFormat.setMinimumIntegerDigits(integerDigits);
-    numberFormat.setMinimumFractionDigits(1);
+    numberFormat.setMinimumFractionDigits(5);
     numberFormat.setMaximumFractionDigits(5);
     numberFormat.setGroupingUsed(false);
     return numberFormat;

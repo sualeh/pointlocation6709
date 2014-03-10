@@ -28,13 +28,6 @@ package us.fatehi.pointlocation6709.format;
 public enum PointLocationFormatType
 {
 
-  /** Decimal format */
-  DECIMAL,
-  /** Long format */
-  LONG,
-  /** Medium format */
-  MEDIUM,
-  /** Short format */
-  SHORT;
+  HUMAN, DECIMAL, LONG, MEDIUM, SHORT;
 
 }

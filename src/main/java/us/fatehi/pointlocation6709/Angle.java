@@ -287,12 +287,12 @@ public class Angle
     final int absIntMinutes = Math.abs(getField(Field.MINUTES));
     final int absIntSeconds = Math.abs(getField(Field.SECONDS));
 
-    representation.append(absIntDegrees).append(Field.DEGREES).append(" ")
-      .append(Math.abs(absIntMinutes)).append(Field.MINUTES);
-    if (absIntSeconds > 0)
-    {
-      representation.append(" ").append(absIntSeconds).append(Field.SECONDS);
-    }
+    representation.append(String.format("%02d", absIntDegrees))
+      .append(Field.DEGREES).append(String.format("%02d", absIntMinutes))
+      .append(Field.MINUTES);
+    representation.append(String.format("%02d", absIntSeconds))
+      .append(Field.SECONDS);
+
     if (direction == null)
     {
       if (radians < 0)
@@ -302,11 +302,10 @@ public class Angle
     }
     else
     {
-      representation.append(" ").append(direction);
+      representation.append(direction);
     }
 
     return new String(representation);
-
   }
 
   /**

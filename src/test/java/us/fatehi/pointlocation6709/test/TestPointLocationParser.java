@@ -113,9 +113,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -129,7 +129,7 @@ public class TestPointLocationParser
     assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+400000-0750000/", formattedPointLocationString1);
-    assertEquals("+40.0-075.0/", formattedPointLocationString2);
+    assertEquals("+40.00000-075.00000/", formattedPointLocationString2);
   }
 
   @SuppressWarnings("boxing")
@@ -142,9 +142,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(12, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -172,9 +172,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(12, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -188,7 +188,7 @@ public class TestPointLocationParser
     assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+401200-0750000/", formattedPointLocationString1);
-    assertEquals("+40.2-075.0/", formattedPointLocationString2);
+    assertEquals("+40.20000-075.00000/", formattedPointLocationString2);
   }
 
   @SuppressWarnings("boxing")
@@ -201,9 +201,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(12, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -231,9 +231,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(12, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -261,9 +261,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(12, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -291,9 +291,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -306,8 +306,9 @@ public class TestPointLocationParser
 
     assertEquals(350D, pointLocation.getAltitude(), 1e-10);
 
-    assertEquals("+400000-0750000+350.0/", formattedPointLocationString1);
-    assertEquals("+40.0-075.0+350.0/", formattedPointLocationString2);
+    assertEquals("+400000-0750000+350.00000/", formattedPointLocationString1);
+    assertEquals("+40.00000-075.00000+350.00000/",
+                 formattedPointLocationString2);
   }
 
   @SuppressWarnings("boxing")
@@ -320,9 +321,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(12, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -336,8 +337,9 @@ public class TestPointLocationParser
 
     assertEquals(350.517, pointLocation.getAltitude(), 1e-10);
 
-    assertEquals("+401213-0750015+350.517/", formattedPointLocationString1);
-    assertEquals("+40.20361-075.00417+350.517/", formattedPointLocationString2);
+    assertEquals("+401213-0750015+350.51700/", formattedPointLocationString1);
+    assertEquals("+40.20361-075.00417+350.51700/",
+                 formattedPointLocationString2);
   }
 
   @SuppressWarnings("boxing")
@@ -350,9 +352,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(12, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -365,8 +367,9 @@ public class TestPointLocationParser
 
     assertEquals(-169.2, pointLocation.getAltitude(), 1e-10);
 
-    assertEquals("+401200-0750000-169.2/", formattedPointLocationString1);
-    assertEquals("+40.2-075.0-169.2/", formattedPointLocationString2);
+    assertEquals("+401200-0750000-169.20000/", formattedPointLocationString1);
+    assertEquals("+40.20000-075.00000-169.20000/",
+                 formattedPointLocationString2);
   }
 
   @SuppressWarnings("boxing")
@@ -379,9 +382,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(12, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -395,8 +398,9 @@ public class TestPointLocationParser
 
     assertEquals(-169.2, pointLocation.getAltitude(), 1e-10);
 
-    assertEquals("+401213-0750015-169.2/", formattedPointLocationString1);
-    assertEquals("+40.20367-075.00417-169.2/", formattedPointLocationString2);
+    assertEquals("+401213-0750015-169.20000/", formattedPointLocationString1);
+    assertEquals("+40.20367-075.00417-169.20000/",
+                 formattedPointLocationString2);
   }
 
   @SuppressWarnings("boxing")
@@ -409,9 +413,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(12, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -425,8 +429,8 @@ public class TestPointLocationParser
 
     assertEquals(2.79, pointLocation.getAltitude(), 1e-10);
 
-    assertEquals("+401213-0750015+2.79/", formattedPointLocationString1);
-    assertEquals("+40.20361-075.00417+2.79/", formattedPointLocationString2);
+    assertEquals("+401213-0750015+2.79000/", formattedPointLocationString1);
+    assertEquals("+40.20361-075.00417+2.79000/", formattedPointLocationString2);
   }
 
   @SuppressWarnings("boxing")
@@ -439,9 +443,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(12, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -455,8 +459,8 @@ public class TestPointLocationParser
 
     assertEquals(2.79, pointLocation.getAltitude(), 1e-10);
 
-    assertEquals("+401213-0750015+2.79/", formattedPointLocationString1);
-    assertEquals("+40.20364-075.00419+2.79/", formattedPointLocationString2);
+    assertEquals("+401213-0750015+2.79000/", formattedPointLocationString1);
+    assertEquals("+40.20364-075.00419+2.79000/", formattedPointLocationString2);
   }
 
   @Test
@@ -468,9 +472,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -484,7 +488,7 @@ public class TestPointLocationParser
     assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+400000-1800000/", formattedPointLocationString1);
-    assertEquals("+40.0-180.0/", formattedPointLocationString2);
+    assertEquals("+40.00000-180.00000/", formattedPointLocationString2);
   }
 
   @Test(expected = ParserException.class)
@@ -507,9 +511,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(90, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -523,7 +527,7 @@ public class TestPointLocationParser
     assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+900000-0750000/", formattedPointLocationString1);
-    assertEquals("+90.0-075.0/", formattedPointLocationString2);
+    assertEquals("+90.00000-075.00000/", formattedPointLocationString2);
   }
 
   @SuppressWarnings("boxing")
@@ -536,9 +540,9 @@ public class TestPointLocationParser
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
     final String formattedPointLocationString1 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.LONG);
+      .formatISO6709(pointLocation, PointLocationFormatType.LONG);
     final String formattedPointLocationString2 = PointLocationFormatter
-      .formatIso6709(pointLocation, PointLocationFormatType.DECIMAL);
+      .formatISO6709(pointLocation, PointLocationFormatType.DECIMAL);
 
     assertEquals(-90, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
     assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
@@ -552,7 +556,7 @@ public class TestPointLocationParser
     assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("-900000-0750000/", formattedPointLocationString1);
-    assertEquals("-90.0-075.0/", formattedPointLocationString2);
+    assertEquals("-90.00000-075.00000/", formattedPointLocationString2);
   }
 
 }
