@@ -22,6 +22,8 @@ package us.fatehi.pointlocation6709.format;
 
 import java.text.NumberFormat;
 
+import org.apache.commons.lang3.StringUtils;
+
 import us.fatehi.pointlocation6709.Angle;
 import us.fatehi.pointlocation6709.Latitude;
 import us.fatehi.pointlocation6709.Longitude;
@@ -80,6 +82,7 @@ public final class PointLocationFormatter
       default:
         throw new FormatterException("Unsupported format type");
     }
+
     return formatted;
 
   }
@@ -182,6 +185,18 @@ public final class PointLocationFormatter
 
   }
 
+  private static String formatCoordinateReferenceSystemIdentifier(final String crs)
+  {
+    if (StringUtils.isNotBlank(crs))
+    {
+      return "CRS" + crs;
+    }
+    else
+    {
+      return "";
+    }
+  }
+
   private static String formatAltitudeWithSign(final double value)
   {
     if (Math.abs(value) > 1E-6)
@@ -247,6 +262,8 @@ public final class PointLocationFormatter
                     formatLongitudeLong(longitude);
     final double altitude = pointLocation.getAltitude();
     string = string + formatAltitudeWithSign(altitude);
+    final String crs = pointLocation.getCoordinateReferenceSystemIdentifier();
+    string = string + formatCoordinateReferenceSystemIdentifier(crs);
     return string + "/";
   }
 
@@ -265,6 +282,8 @@ public final class PointLocationFormatter
                     formatLongitudeMedium(longitude);
     final double altitude = pointLocation.getAltitude();
     string = string + formatAltitudeWithSign(altitude);
+    final String crs = pointLocation.getCoordinateReferenceSystemIdentifier();
+    string = string + formatCoordinateReferenceSystemIdentifier(crs);
     return string + "/";
   }
 
@@ -283,6 +302,8 @@ public final class PointLocationFormatter
                     formatLongitudeShort(longitude);
     final double altitude = pointLocation.getAltitude();
     string = string + formatAltitudeWithSign(altitude);
+    final String crs = pointLocation.getCoordinateReferenceSystemIdentifier();
+    string = string + formatCoordinateReferenceSystemIdentifier(crs);
     return string + "/";
   }
 
@@ -301,6 +322,8 @@ public final class PointLocationFormatter
                     formatLongitudeWithDecimals(longitude);
     final double altitude = pointLocation.getAltitude();
     string = string + formatAltitudeWithSign(altitude);
+    final String crs = pointLocation.getCoordinateReferenceSystemIdentifier();
+    string = string + formatCoordinateReferenceSystemIdentifier(crs);
     return string + "/";
   }
 

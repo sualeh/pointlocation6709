@@ -27,7 +27,7 @@ public class TestFormatter
     pointLocation[1] = PointLocationParser
       .parsePointLocation("+401213.123-075+23.23/");
     pointLocation[2] = PointLocationParser
-      .parsePointLocation("+401213.123-075-13.13CSRcustom/");
+      .parsePointLocation("+401213.123-075-13.13CRScustom/");
   }
 
   @Test
@@ -39,7 +39,7 @@ public class TestFormatter
                  formatISO6709(pointLocation[0], format));
     assertEquals("+40.20365-075.00000+23.23000/",
                  formatISO6709(pointLocation[1], format));
-    assertEquals("+40.20365-075.00000-13.13000/",
+    assertEquals("+40.20365-075.00000-13.13000CRScustom/",
                  formatISO6709(pointLocation[2], format));
   }
 
@@ -59,7 +59,7 @@ public class TestFormatter
     assertEquals("+401213-0750015/", formatISO6709(pointLocation[0], format));
     assertEquals("+401213-0750000+23.23000/",
                  formatISO6709(pointLocation[1], format));
-    assertEquals("+401213-0750000-13.13000/",
+    assertEquals("+401213-0750000-13.13000CRScustom/",
                  formatISO6709(pointLocation[2], format));
   }
 
@@ -71,7 +71,7 @@ public class TestFormatter
     assertEquals("+4012-07500/", formatISO6709(pointLocation[0], format));
     assertEquals("+4012-07500+23.23000/",
                  formatISO6709(pointLocation[1], format));
-    assertEquals("+4012-07500-13.13000/",
+    assertEquals("+4012-07500-13.13000CRScustom/",
                  formatISO6709(pointLocation[2], format));
   }
 
@@ -82,7 +82,8 @@ public class TestFormatter
     final PointLocationFormatType format = PointLocationFormatType.SHORT;
     assertEquals("+40-075/", formatISO6709(pointLocation[0], format));
     assertEquals("+40-075+23.23000/", formatISO6709(pointLocation[1], format));
-    assertEquals("+40-075-13.13000/", formatISO6709(pointLocation[2], format));
+    assertEquals("+40-075-13.13000CRScustom/",
+                 formatISO6709(pointLocation[2], format));
   }
 
 }
