@@ -5,12 +5,31 @@
   <groupId>us.fatehi</groupId>
   <artifactId>pointlocation6709</artifactId>
   <name>Point Location 6709</name>
+  <packaging>jar</packaging>
   <version>4.0</version>  
   <description>
 		Point Location 6709 is an LGPL licensed Java library for parsing
 		and formatting geographic point locations in ISO 6709
 		format.
 	</description>
+  <url>https://github.com/sualeh/pointlocation6709</url>
+  <scm>
+    <connection>scm:git:git@github.com:sualeh/pointlocation6709.git</connection>
+    <developerConnection>scm:git:git@github.com:sualeh/pointlocation6709.git</developerConnection>
+    <url>git@github.com:sualeh/pointlocation6709.git</url>
+  </scm>  
+  <distributionManagement>
+    <snapshotRepository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>sonatype-nexus</id>
+      <name>Sonatype Nexus</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    </repository>
+  </distributionManagement>  
   <licenses>
     <license>
       <name>GNU Lesser General Public License</name>
@@ -45,6 +64,10 @@
     	<version>3.2.1</version>
     </dependency>
   </dependencies>
+  <properties>
+    <project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
+    <skip.signing.artifacts>true</skip.signing.artifacts>
+  </properties>
   <build>
     <plugins>
       <plugin>
@@ -73,7 +96,100 @@
             </manifestEntries>
           </archive>
         </configuration>
-      </plugin>	      
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <quiet>true</quiet>
+              <show>public</show>
+              <detectOfflineLinks>true</detectOfflineLinks>
+              <links>
+                <link>http://docs.oracle.com/javase/7/docs/api/</link>
+              </links>
+              <bottom>Copyright &#169; 2000-2014 {organizationName}. All rights reserved.</bottom>
+              <doctitle>${project.name} ${project.version}</doctitle>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>      
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <id>attach-artifacts</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attach-artifact</goal>
+            </goals>
+            <configuration>
+              <artifacts>
+                <artifact>
+                  <file>target/${project.artifactId}-${project.version}-sources.jar</file>
+                  <type>jar</type>
+                  <classifier>sources</classifier>
+                </artifact>
+                <artifact>
+                  <file>target/${project.artifactId}-${project.version}-javadoc.jar</file>
+                  <type>jar</type>
+                  <classifier>javadoc</classifier>
+                </artifact>
+              </artifacts>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>   
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.1</version>
+        <configuration>
+          <useAgent>true</useAgent>
+          <skip>${skip.signing.artifacts}</skip>
+        </configuration>
+        <executions>
+          <execution>
+            <id>project_release</id>
+            <phase>deploy</phase>
+            <configuration>
+              <file>target/${project.artifactId}-${project.version}.jar</file>
+              <generatePom>false</generatePom>
+              <pomFile>pom.xml</pomFile>
+              <repositoryId>sonatype-nexus</repositoryId>
+              <repositoryLayout>default</repositoryLayout>
+              <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+              <groupId>${project.groupId}</groupId>
+              <artifactId>${project.artifactId}</artifactId>
+              <packaging>jar</packaging>
+              <version>${project.version}</version>
+            </configuration>
+            <goals>
+              <goal>sign-and-deploy-file</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>      
     </plugins>
   </build>
 </project>
