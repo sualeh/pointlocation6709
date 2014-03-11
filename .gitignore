@@ -1,7 +1,1 @@
-.svn
-.clover
 target
-workspace
-*.patch
-/schemacrawler-docs/*.txt
-/schemacrawler-docs/*.png
