@@ -103,8 +103,9 @@
         <version>2.1.2</version>
         <executions>
           <execution>
+            <id>attach-sources</id>
             <goals>
-              <goal>jar-no-fork</goal>
+              <goal>jar</goal>
             </goals>
           </execution>
         </executions>
@@ -131,61 +132,21 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>      
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <version>1.7</version>
-        <executions>
-          <execution>
-            <id>attach-artifacts</id>
-            <phase>package</phase>
-            <goals>
-              <goal>attach-artifact</goal>
-            </goals>
-            <configuration>
-              <artifacts>
-                <artifact>
-                  <file>target/${project.artifactId}-${project.version}-sources.jar</file>
-                  <type>jar</type>
-                  <classifier>sources</classifier>
-                </artifact>
-                <artifact>
-                  <file>target/${project.artifactId}-${project.version}-javadoc.jar</file>
-                  <type>jar</type>
-                  <classifier>javadoc</classifier>
-                </artifact>
-              </artifacts>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>   
+      </plugin>    
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.1</version>
+        <version>1.4</version>
         <configuration>
           <useAgent>true</useAgent>
           <skip>${skip.signing.artifacts}</skip>
         </configuration>
         <executions>
           <execution>
-            <id>project_release</id>
-            <phase>deploy</phase>
-            <configuration>
-              <file>target/${project.artifactId}-${project.version}.jar</file>
-              <generatePom>false</generatePom>
-              <pomFile>pom.xml</pomFile>
-              <repositoryId>sonatype-nexus</repositoryId>
-              <repositoryLayout>default</repositoryLayout>
-              <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-              <groupId>${project.groupId}</groupId>
-              <artifactId>${project.artifactId}</artifactId>
-              <packaging>jar</packaging>
-              <version>${project.version}</version>
-            </configuration>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
             <goals>
-              <goal>sign-and-deploy-file</goal>
+              <goal>sign</goal>
             </goals>
           </execution>
         </executions>
