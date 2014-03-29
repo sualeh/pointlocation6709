@@ -2,7 +2,7 @@ package us.fatehi.pointlocation6709.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static us.fatehi.pointlocation6709.format.PointLocationFormatter.formatISO6709;
+import static us.fatehi.pointlocation6709.format.PointLocationFormatter.formatPointLocation;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,11 +36,11 @@ public class TestFormatter
   {
     final PointLocationFormatType format = PointLocationFormatType.DECIMAL;
     assertEquals("+40.20365-075.00420/",
-                 formatISO6709(pointLocation[0], format));
+                 formatPointLocation(pointLocation[0], format));
     assertEquals("+40.20365-075.00000+23.23000/",
-                 formatISO6709(pointLocation[1], format));
+                 formatPointLocation(pointLocation[1], format));
     assertEquals("+40.20365-075.00000-13.13000CRScustom/",
-                 formatISO6709(pointLocation[2], format));
+                 formatPointLocation(pointLocation[2], format));
   }
 
   @Test
@@ -56,11 +56,11 @@ public class TestFormatter
     throws FormatterException
   {
     final PointLocationFormatType format = PointLocationFormatType.LONG;
-    assertEquals("+401213-0750015/", formatISO6709(pointLocation[0], format));
+    assertEquals("+401213-0750015/", formatPointLocation(pointLocation[0], format));
     assertEquals("+401213-0750000+23.23000/",
-                 formatISO6709(pointLocation[1], format));
+                 formatPointLocation(pointLocation[1], format));
     assertEquals("+401213-0750000-13.13000CRScustom/",
-                 formatISO6709(pointLocation[2], format));
+                 formatPointLocation(pointLocation[2], format));
   }
 
   @Test
@@ -68,11 +68,11 @@ public class TestFormatter
     throws FormatterException
   {
     final PointLocationFormatType format = PointLocationFormatType.MEDIUM;
-    assertEquals("+4012-07500/", formatISO6709(pointLocation[0], format));
+    assertEquals("+4012-07500/", formatPointLocation(pointLocation[0], format));
     assertEquals("+4012-07500+23.23000/",
-                 formatISO6709(pointLocation[1], format));
+                 formatPointLocation(pointLocation[1], format));
     assertEquals("+4012-07500-13.13000CRScustom/",
-                 formatISO6709(pointLocation[2], format));
+                 formatPointLocation(pointLocation[2], format));
   }
 
   @Test
@@ -80,10 +80,10 @@ public class TestFormatter
     throws FormatterException
   {
     final PointLocationFormatType format = PointLocationFormatType.SHORT;
-    assertEquals("+40-075/", formatISO6709(pointLocation[0], format));
-    assertEquals("+40-075+23.23000/", formatISO6709(pointLocation[1], format));
+    assertEquals("+40-075/", formatPointLocation(pointLocation[0], format));
+    assertEquals("+40-075+23.23000/", formatPointLocation(pointLocation[1], format));
     assertEquals("+40-075-13.13000CRScustom/",
-                 formatISO6709(pointLocation[2], format));
+                 formatPointLocation(pointLocation[2], format));
   }
 
 }

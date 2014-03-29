@@ -1,9 +1,9 @@
-/* 
- * 
+/*
+ *
  * Point Location 6709
  * http://github.com/sualeh/pointlocation6709
  * Copyright (c) 2007-2014, Sualeh Fatehi.
- * 
+ *
  * This library is free software; you can redistribute it and/or modify it under the terms
  * of the GNU Lesser General Public License as published by the Free Software Foundation;
  * either version 2.1 of the License, or (at your option) any later version.
@@ -29,7 +29,7 @@ import org.apache.commons.lang3.StringUtils;
  * latitude, longitude and altitude can be parsed from and formatted to
  * the format defined in ISO 6709, "Standard representation of latitude,
  * longitude and altitude for geographic point locations".
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class PointLocation
@@ -45,7 +45,7 @@ public final class PointLocation
 
   /**
    * Constructor.
-   * 
+   *
    * @param latitude
    *        Latitude
    * @param longitude
@@ -58,7 +58,7 @@ public final class PointLocation
 
   /**
    * Constructor.
-   * 
+   *
    * @param latitude
    *        Latitude
    * @param longitude
@@ -86,7 +86,7 @@ public final class PointLocation
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
   @Override
@@ -107,7 +107,7 @@ public final class PointLocation
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -170,7 +170,7 @@ public final class PointLocation
 
   /**
    * Altitude for this location, in meters.
-   * 
+   *
    * @return Altitude
    */
   public double getAltitude()
@@ -182,7 +182,7 @@ public final class PointLocation
    * Coordinate reference system identifier. See <a
    * href="https://en.wikipedia.org/wiki/Coordinate_reference_system">
    * Spatial reference system</a>
-   * 
+   *
    * @return CRS identifier
    */
   public String getCoordinateReferenceSystemIdentifier()
@@ -192,7 +192,7 @@ public final class PointLocation
 
   /**
    * Latitude for this location. Northern latitudes are positive.
-   * 
+   *
    * @return Latitude.
    */
   public Latitude getLatitude()
@@ -202,7 +202,7 @@ public final class PointLocation
 
   /**
    * Longitude for this location. Eastern latitudes are positive.
-   * 
+   *
    * @return Longitude.
    */
   public Longitude getLongitude()
@@ -212,7 +212,7 @@ public final class PointLocation
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -236,7 +236,7 @@ public final class PointLocation
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override

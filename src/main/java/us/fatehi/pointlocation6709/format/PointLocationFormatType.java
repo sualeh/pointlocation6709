@@ -1,9 +1,9 @@
-/* 
- * 
+/*
+ *
  * Point Location 6709
  * http://github.com/sualeh/pointlocation6709
  * Copyright (c) 2007-2014, Sualeh Fatehi.
- * 
+ *
  * This library is free software; you can redistribute it and/or modify it under the terms
  * of the GNU Lesser General Public License as published by the Free Software Foundation;
  * either version 2.1 of the License, or (at your option) any later version.
@@ -22,12 +22,12 @@ package us.fatehi.pointlocation6709.format;
 
 /**
  * Types of formatting for point locations.
- * 
+ *
  * @author sfatehi
  */
 public enum PointLocationFormatType
 {
 
-  HUMAN, DECIMAL, LONG, MEDIUM, SHORT;
+  HUMAN_LONG, HUMAN_MEDIUM, HUMAN_SHORT, DECIMAL, LONG, MEDIUM, SHORT;
 
 }

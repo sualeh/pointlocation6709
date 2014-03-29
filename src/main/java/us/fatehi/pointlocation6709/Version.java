@@ -26,31 +26,31 @@ package us.fatehi.pointlocation6709;
  * Version information for this product. Has methods to obtain
  * information about the product, as well as a main method, so it can be
  * called from the command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class Version
 {
 
-  private static final String PRODUCTNAME = "Point Location 6709"; //$NON-NLS-1$
-  private static final String VERSION = "4.0"; //$NON-NLS-1$
+  private static final String PRODUCTNAME = "Point Location 6709";
+  private static final String VERSION = "4.1";
 
   /**
    * Information about this product.
-   * 
+   *
    * @return Information about this product.
    */
   public static String about()
   {
     final StringBuffer about = new StringBuffer();
-    about.append(getProductName()).append(" ").append(getVersion()) //$NON-NLS-1$
-      .append("\n").append("\u00A9 2007-2014 Sualeh Fatehi"); //$NON-NLS-1$ //$NON-NLS-2$
+    about.append(getProductName()).append(" ").append(getVersion())
+      .append("\n").append("\u00A9 2007-2014 Sualeh Fatehi"); //$NON-NLS-2$
     return new String(about);
   }
 
   /**
    * Product name.
-   * 
+   *
    * @return Product name.
    */
   public static String getProductName()
@@ -60,7 +60,7 @@ public final class Version
 
   /**
    * Product version number.
-   * 
+   *
    * @return Product version number.
    */
   public static String getVersion()
@@ -70,7 +70,7 @@ public final class Version
 
   /**
    * Main routine. Prints information about this product.
-   * 
+   *
    * @param args
    *        Arguments to the main routine - they are ignored.
    */
@@ -85,7 +85,7 @@ public final class Version
 
   /**
    * String representation. Information about this product.
-   * 
+   *
    * @return String representation.
    */
   @Override

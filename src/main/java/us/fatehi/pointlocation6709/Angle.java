@@ -1,9 +1,9 @@
-/* 
- * 
+/*
+ *
  * Point Location 6709
  * http://github.com/sualeh/pointlocation6709
  * Copyright (c) 2007-2014, Sualeh Fatehi.
- * 
+ *
  * This library is free software; you can redistribute it and/or modify it under the terms
  * of the GNU Lesser General Public License as published by the Free Software Foundation;
  * either version 2.1 of the License, or (at your option) any later version.
@@ -27,12 +27,20 @@ import java.io.Serializable;
 /**
  * Represents an angle in degrees or radians. Has convenience methods to
  * do trigonometric operations, and normalizations.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public class Angle
   implements Serializable, Comparable<Angle>
 {
+
+  /**
+   * Format type for angles.
+   */
+  public enum AngleFormat
+  {
+    SHORT, MEDIUM, LONG
+  }
 
   /**
    * Angle fields.
@@ -55,7 +63,7 @@ public class Angle
 
     /**
      * Description of the field.
-     * 
+     *
      * @return Description of the field
      */
     public String getDescription()
@@ -65,7 +73,7 @@ public class Angle
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Enum#toString()
      */
     @Override
@@ -81,7 +89,7 @@ public class Angle
   /**
    * Static construction method, constructs an angle from the degree
    * value provided.
-   * 
+   *
    * @param degrees
    *        Value of the angle in degrees.
    * @return A new Angle.
@@ -94,7 +102,7 @@ public class Angle
   /**
    * Static construction method, constructs an angle from the radian
    * value provided.
-   * 
+   *
    * @param radians
    *        Value of the angle in radians.
    * @return A new Angle.
@@ -105,11 +113,12 @@ public class Angle
   }
 
   private final double radians;
+
   private transient int[] sexagesimalDegreeParts;
 
   /**
    * Copy constructor. Copies the value of a provided angle.
-   * 
+   *
    * @param angle
    *        Angle to copy the value from.
    */
@@ -120,7 +129,7 @@ public class Angle
 
   /**
    * Copy constructor. Copies the value of a provided angle.
-   * 
+   *
    * @param angle
    *        Angle to copy the value from.
    */
@@ -166,7 +175,7 @@ public class Angle
 
   /**
    * Calculates the cosine of the angle.
-   * 
+   *
    * @return Cosine.
    */
   public final double cos()
@@ -176,7 +185,7 @@ public class Angle
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -203,9 +212,79 @@ public class Angle
     return true;
   }
 
+  public String format(final AngleFormat angleFormat)
+  {
+    final AngleFormat format;
+    if (angleFormat == null)
+    {
+      format = AngleFormat.LONG;
+    }
+    else
+    {
+      format = angleFormat;
+    }
+
+    int absIntDegrees = Math.abs(getField(Field.DEGREES));
+    int absIntMinutes = Math.abs(getField(Field.MINUTES));
+    int absIntSeconds = Math.abs(getField(Field.SECONDS));
+
+    // Round values for format
+    switch (format)
+    {
+      case SHORT:
+        if (absIntMinutes >= 30)
+        {
+          absIntDegrees = absIntDegrees + 1;
+        }
+        absIntMinutes = 0;
+        absIntSeconds = 0;
+        break;
+      case MEDIUM:
+        if (absIntSeconds >= 30)
+        {
+          absIntMinutes = absIntMinutes + 1;
+        }
+        absIntSeconds = 0;
+        break;
+      case LONG:
+      default:
+        break;
+    }
+
+    final StringBuilder representation = new StringBuilder();
+    final String direction = getDirection();
+
+    representation.append(String.format("%02d", absIntDegrees))
+      .append(Field.DEGREES);
+    if (format != AngleFormat.SHORT)
+    {
+      representation.append(String.format("%02d", absIntMinutes))
+        .append(Field.MINUTES);
+      if (format != AngleFormat.LONG)
+      {
+        representation.append(String.format("%02d", absIntSeconds))
+          .append(Field.SECONDS);
+      }
+    }
+
+    if (direction == null)
+    {
+      if (radians < 0)
+      {
+        representation.insert(0, "-");
+      }
+    }
+    else
+    {
+      representation.append(direction);
+    }
+
+    return representation.toString();
+  }
+
   /**
    * Degrees value of the angle.
-   * 
+   *
    * @return Value in degrees.
    */
   public final double getDegrees()
@@ -221,7 +300,7 @@ public class Angle
    * <p>
    * Throws NullPointerException if field is not provided.
    * </p>
-   * 
+   *
    * @param field
    *        One of the field constants specifying the field to be
    *        retrieved.
@@ -238,7 +317,7 @@ public class Angle
 
   /**
    * Radians value of the angle.
-   * 
+   *
    * @return Value in radians.
    */
   public final double getRadians()
@@ -248,7 +327,7 @@ public class Angle
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -264,7 +343,7 @@ public class Angle
 
   /**
    * Calculates the sine of the angle.
-   * 
+   *
    * @return Sine.
    */
   public final double sin()
@@ -274,43 +353,18 @@ public class Angle
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override
   public String toString()
   {
-    final StringBuffer representation = new StringBuffer();
-    final String direction = getDirection();
-
-    final int absIntDegrees = Math.abs(getField(Field.DEGREES));
-    final int absIntMinutes = Math.abs(getField(Field.MINUTES));
-    final int absIntSeconds = Math.abs(getField(Field.SECONDS));
-
-    representation.append(String.format("%02d", absIntDegrees))
-      .append(Field.DEGREES).append(String.format("%02d", absIntMinutes))
-      .append(Field.MINUTES);
-    representation.append(String.format("%02d", absIntSeconds))
-      .append(Field.SECONDS);
-
-    if (direction == null)
-    {
-      if (radians < 0)
-      {
-        representation.insert(0, "-");
-      }
-    }
-    else
-    {
-      representation.append(direction);
-    }
-
-    return new String(representation);
+    return format(AngleFormat.LONG);
   }
 
   /**
    * Get direction.
-   * 
+   *
    * @return Direction.
    */
   protected String getDirection()
@@ -331,7 +385,7 @@ public class Angle
   /**
    * Splits a double value into it's sexagesimal parts. Each part has
    * the same sign as the provided value.
-   * 
+   *
    * @param value
    *        Value to split
    * @return Split parts

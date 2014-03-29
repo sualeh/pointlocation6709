@@ -1,9 +1,9 @@
-/* 
- * 
+/*
+ *
  * Point Location 6709
  * http://github.com/sualeh/pointlocation6709
  * Copyright (c) 2007-2014, Sualeh Fatehi.
- * 
+ *
  * This library is free software; you can redistribute it and/or modify it under the terms
  * of the GNU Lesser General Public License as published by the Free Software Foundation;
  * either version 2.1 of the License, or (at your option) any later version.
@@ -45,7 +45,7 @@ import us.fatehi.pointlocation6709.Longitude;
 
 /**
  * Parses objects from strings.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class CoordinateParser
@@ -84,7 +84,7 @@ public final class CoordinateParser
 
   /**
    * Parses a string representation of the latitude.
-   * 
+   *
    * @param latitudeString
    *        String representation of the point location
    * @return Latitude
@@ -108,7 +108,7 @@ public final class CoordinateParser
 
   /**
    * Parses a string representation of the longitude.
-   * 
+   *
    * @param longitudeString
    *        String representation of the longitude
    * @return Longitude
