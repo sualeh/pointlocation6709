@@ -260,7 +260,7 @@ public class Angle
     {
       representation.append(String.format("%02d", absIntMinutes))
         .append(Field.MINUTES);
-      if (format != AngleFormat.LONG)
+      if (format != AngleFormat.MEDIUM)
       {
         representation.append(String.format("%02d", absIntSeconds))
           .append(Field.SECONDS);

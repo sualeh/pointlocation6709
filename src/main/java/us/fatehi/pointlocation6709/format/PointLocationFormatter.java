@@ -244,7 +244,10 @@ public final class PointLocationFormatter
     String string = formatLatitudeHumanMedium(latitude) + " " +
                     formatLongitudeHumanMedium(longitude);
     final double altitude = pointLocation.getAltitude();
-    string = string + " " + formatAltitudeWithSign(altitude);
+    if (altitude != 0)
+    {
+      string = string + " " + formatAltitudeWithSign(altitude);
+    }
     return string;
   }
 
@@ -262,7 +265,10 @@ public final class PointLocationFormatter
     String string = formatLatitudeHumanShort(latitude) + " " +
                     formatLongitudeHumanShort(longitude);
     final double altitude = pointLocation.getAltitude();
-    string = string + " " + formatAltitudeWithSign(altitude);
+    if (altitude != 0)
+    {
+      string = string + " " + formatAltitudeWithSign(altitude);
+    }
     return string;
   }
 
