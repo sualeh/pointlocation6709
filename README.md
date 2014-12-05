@@ -1,6 +1,8 @@
 # Point Location 6709 
 
-A Java representation of [ISO 6709] geographic point location by coordinates. All classes are immutable and thread-safe. The code includes a parser that can parse all valid ISO 6709 representations. A formatter formats point locations to ISO 6709 "[human interface]" representations as well as "[string expressions]". Validity is enforced by JUnit tests. Maven is needed for a build.
+*Point Location 6709* is a Java representation of [ISO 6709] geographic point location by coordinates. 
+
+All classes are immutable and thread-safe. The code includes a parser that can parse all valid ISO 6709 representations. A formatter formats point locations to ISO 6709 "[human interface]" representations as well as "[string expressions]". Validity is enforced by JUnit tests. Java 7 or newer is required. 
 
 ## Download
 
