@@ -7,6 +7,8 @@
 
 All classes are immutable and thread-safe. The code includes a parser that can parse all valid ISO 6709 representations. A formatter formats point locations to ISO 6709 "[human interface]" representations as well as "[string expressions]". Validity is enforced by JUnit tests. Java 7 or newer is required. 
 
+(See [sualeh/pointlocation6709-ts](https://github.com/sualeh/pointlocation6709-ts) for a Typescript library for Point Location 6709.)
+
 ## Download
 
 You can download the [jar on the Maven Central Repository].
