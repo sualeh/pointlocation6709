@@ -46,4 +46,4 @@ jobs:
           --batch-mode \
           -Dmaven.javadoc.skip=true \
           -Dskip.signing.artifacts=true \
-          clean deploy
+          clean package
