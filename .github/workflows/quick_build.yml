@@ -1,0 +1,49 @@
+name: Quick Build
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    name: Quick Build
+    runs-on: ubuntu-latest
+    steps:
+
+# SETUP BUILD ENVIRONMENT
+    - id: checkout-code
+      name: Checkout code
+      uses: actions/checkout@v2
+    - id: setup-jdk
+      name: Setup JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 8
+    - id: cache-m2
+      name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+    - id: show-environment
+      name: Show environment
+      run: |
+        # Show environment
+        echo github.repository: ${{ github.repository }}
+        echo github.ref: ${{ github.head_ref || github.ref }}
+        echo github.sha: ${{ github.sha }}
+        mvn -v
+        cat ~/.m2/settings.xml
+
+# BUILD FOR DISTRIBUTION
+    - id: build
+      name: Build and test for distribution
+      run: |
+        # Build
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -Dmaven.javadoc.skip=true \
+          -Dskip.signing.artifacts=true \
+          clean deploy

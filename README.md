@@ -16,11 +16,12 @@ You can download the [jar on the Maven Central Repository].
 ## Maven Build
 
 To use *Point Location 6709* in your Maven build, include the following dependency. No repositories references are needed, since the jars are in the Maven Central Repository.
+
 ```xml
 <dependency>
     <groupId>us.fatehi</groupId>
     <artifactId>pointlocation6709</artifactId>
-    <version>4.1</version>
+    <version>4.2.1</version>
 </dependency>
 ```
 
