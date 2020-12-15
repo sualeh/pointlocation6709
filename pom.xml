@@ -6,9 +6,9 @@
   <artifactId>pointlocation6709</artifactId>
   <name>Point Location 6709</name>
   <packaging>jar</packaging>
-  <version>4.1</version>  
+  <version>4.2.1</version>  
   <description>
-		Point Location 6709 is an LGPL licensed Java library for parsing
+		Point Location 6709 is a Java library for parsing
 		and formatting geographic point locations in ISO 6709
 		format.
 	</description>
@@ -53,9 +53,15 @@
   </organization>  
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.7.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest</artifactId>
+      <version>2.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -65,7 +71,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <skip.signing.artifacts>true</skip.signing.artifacts>
   </properties>
   <build>
@@ -73,16 +79,16 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <version>3.8.1</version>
         <configuration>
-          <source>7</source>
-          <target>7</target>
+          <source>8</source>
+          <target>8</target>
         </configuration>
       </plugin>  
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
+        <version>3.2.0</version>
         <configuration>
           <archive>
             <index>true</index>
@@ -100,7 +106,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>2.1.2</version>
+        <version>3.2.1</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -113,7 +119,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9.1</version>
+        <version>3.2.0</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -123,11 +129,7 @@
             <configuration>
               <quiet>true</quiet>
               <show>public</show>
-              <detectOfflineLinks>true</detectOfflineLinks>
-              <links>
-                <link>http://docs.oracle.com/javase/7/docs/api/</link>
-              </links>
-              <bottom>Copyright &#169; 2000-2014 {organizationName}. All rights reserved.</bottom>
+              <bottom>Copyright &#169; 2000-2020 {organizationName}. All rights reserved.</bottom>
               <doctitle>${project.name} ${project.version}</doctitle>
             </configuration>
           </execution>

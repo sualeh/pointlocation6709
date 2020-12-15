@@ -1,52 +1,31 @@
 /*
- *
  * Point Location 6709
  * http://github.com/sualeh/pointlocation6709
- * Copyright (c) 2007-2014, Sualeh Fatehi.
- *
- * This library is free software; you can redistribute it and/or modify it under the terms
- * of the GNU Lesser General Public License as published by the Free Software Foundation;
- * either version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
- * Boston, MA 02111-1307, USA.
- *
+ * Copyright (c) 2007-2020, Sualeh Fatehi.
  */
 package us.fatehi.pointlocation6709;
-
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 /**
- * Represents an angle in degrees or radians. Has convenience methods to
- * do trigonometric operations, and normalizations.
+ * Represents an angle in degrees or radians. Has convenience methods to do trigonometric
+ * operations, and normalizations.
  *
  * @author Sualeh Fatehi
  */
-public class Angle
-  implements Serializable, Comparable<Angle>
-{
+public class Angle implements Serializable, Comparable<Angle> {
 
-  /**
-   * Format type for angles.
-   */
-  public enum AngleFormat
-  {
-    SHORT, MEDIUM, LONG
+  /** Format type for angles. */
+  public enum AngleFormat {
+    SHORT,
+    MEDIUM,
+    LONG
   }
 
-  /**
-   * Angle fields.
-   */
-  public enum Field
-  {
+  /** Angle fields. */
+  public enum Field {
     /** Degrees. */
     DEGREES("\u00B0"),
     /** Minutes. */
@@ -56,8 +35,7 @@ public class Angle
 
     private final String symbol;
 
-    private Field(final String symbol)
-    {
+    private Field(final String symbol) {
       this.symbol = symbol;
     }
 
@@ -66,8 +44,7 @@ public class Angle
      *
      * @return Description of the field
      */
-    public String getDescription()
-    {
+    public String getDescription() {
       return name().toLowerCase();
     }
 
@@ -77,38 +54,30 @@ public class Angle
      * @see java.lang.Enum#toString()
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
       return symbol;
     }
-
   }
 
   private static final long serialVersionUID = -6330836471692225095L;
 
   /**
-   * Static construction method, constructs an angle from the degree
-   * value provided.
+   * Static construction method, constructs an angle from the degree value provided.
    *
-   * @param degrees
-   *        Value of the angle in degrees.
+   * @param degrees Value of the angle in degrees.
    * @return A new Angle.
    */
-  public static Angle fromDegrees(final double degrees)
-  {
+  public static Angle fromDegrees(final double degrees) {
     return fromRadians(degrees * Math.PI / 180D);
   }
 
   /**
-   * Static construction method, constructs an angle from the radian
-   * value provided.
+   * Static construction method, constructs an angle from the radian value provided.
    *
-   * @param radians
-   *        Value of the angle in radians.
+   * @param radians Value of the angle in radians.
    * @return A new Angle.
    */
-  public static Angle fromRadians(final double radians)
-  {
+  public static Angle fromRadians(final double radians) {
     return new Angle(radians);
   }
 
@@ -119,55 +88,41 @@ public class Angle
   /**
    * Copy constructor. Copies the value of a provided angle.
    *
-   * @param angle
-   *        Angle to copy the value from.
+   * @param angle Angle to copy the value from.
    */
-  public Angle(final Angle angle)
-  {
+  public Angle(final Angle angle) {
     this(angle.radians);
   }
 
   /**
    * Copy constructor. Copies the value of a provided angle.
    *
-   * @param angle
-   *        Angle to copy the value from.
+   * @param angle Angle to copy the value from.
    */
-  protected Angle(final Angle angle, final int range)
-  {
+  protected Angle(final Angle angle, final int range) {
     this(angle);
 
     final double degrees = getDegrees();
-    if (Math.abs(degrees) > range)
-    {
-      throw new IllegalArgumentException("" + degrees + Field.DEGREES +
-                                         " is out of range, +/-" + range +
-                                         Field.DEGREES);
+    if (Math.abs(degrees) > range) {
+      throw new IllegalArgumentException(
+          "" + degrees + Field.DEGREES + " is out of range, +/-" + range + Field.DEGREES);
     }
   }
 
-  /**
-   * Default constructor. Initializes the angle to a value of 0.
-   */
-  private Angle(final double radians)
-  {
+  /** Default constructor. Initializes the angle to a value of 0. */
+  private Angle(final double radians) {
     this.radians = radians;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final int compareTo(final Angle angle)
-  {
+  public final int compareTo(final Angle angle) {
     int comparison;
     comparison = getField(Field.DEGREES) - angle.getField(Field.DEGREES);
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       comparison = getField(Field.MINUTES) - angle.getField(Field.MINUTES);
     }
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       comparison = getField(Field.SECONDS) - angle.getField(Field.SECONDS);
     }
     return comparison;
@@ -178,8 +133,7 @@ public class Angle
    *
    * @return Cosine.
    */
-  public final double cos()
-  {
+  public final double cos() {
     return Math.cos(radians);
   }
 
@@ -189,38 +143,28 @@ public class Angle
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public boolean equals(final Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
-    if (getClass() != obj.getClass())
-    {
+    if (getClass() != obj.getClass()) {
       return false;
     }
     final Angle other = (Angle) obj;
-    if (Double.doubleToLongBits(radians) != Double
-      .doubleToLongBits(other.radians))
-    {
+    if (Double.doubleToLongBits(radians) != Double.doubleToLongBits(other.radians)) {
       return false;
     }
     return true;
   }
 
-  public String format(final AngleFormat angleFormat)
-  {
+  public String format(final AngleFormat angleFormat) {
     final AngleFormat format;
-    if (angleFormat == null)
-    {
+    if (angleFormat == null) {
       format = AngleFormat.LONG;
-    }
-    else
-    {
+    } else {
       format = angleFormat;
     }
 
@@ -229,19 +173,16 @@ public class Angle
     int absIntSeconds = Math.abs(getField(Field.SECONDS));
 
     // Round values for format
-    switch (format)
-    {
+    switch (format) {
       case SHORT:
-        if (absIntMinutes >= 30)
-        {
+        if (absIntMinutes >= 30) {
           absIntDegrees = absIntDegrees + 1;
         }
         absIntMinutes = 0;
         absIntSeconds = 0;
         break;
       case MEDIUM:
-        if (absIntSeconds >= 30)
-        {
+        if (absIntSeconds >= 30) {
           absIntMinutes = absIntMinutes + 1;
         }
         absIntSeconds = 0;
@@ -254,28 +195,19 @@ public class Angle
     final StringBuilder representation = new StringBuilder();
     final String direction = getDirection();
 
-    representation.append(String.format("%02d", absIntDegrees))
-      .append(Field.DEGREES);
-    if (format != AngleFormat.SHORT)
-    {
-      representation.append(String.format("%02d", absIntMinutes))
-        .append(Field.MINUTES);
-      if (format != AngleFormat.MEDIUM)
-      {
-        representation.append(String.format("%02d", absIntSeconds))
-          .append(Field.SECONDS);
+    representation.append(String.format("%02d", absIntDegrees)).append(Field.DEGREES);
+    if (format != AngleFormat.SHORT) {
+      representation.append(String.format("%02d", absIntMinutes)).append(Field.MINUTES);
+      if (format != AngleFormat.MEDIUM) {
+        representation.append(String.format("%02d", absIntSeconds)).append(Field.SECONDS);
       }
     }
 
-    if (direction == null)
-    {
-      if (radians < 0)
-      {
+    if (direction == null) {
+      if (radians < 0) {
         representation.insert(0, "-");
       }
-    }
-    else
-    {
+    } else {
       representation.append(direction);
     }
 
@@ -287,29 +219,20 @@ public class Angle
    *
    * @return Value in degrees.
    */
-  public final double getDegrees()
-  {
+  public final double getDegrees() {
     return radians * 180D / Math.PI;
   }
 
   /**
-   * <p>
-   * Gets an angle field - such as degrees, minutes, or seconds. Signs
-   * will be consistent.
-   * </p>
-   * <p>
-   * Throws NullPointerException if field is not provided.
-   * </p>
+   * Gets an angle field - such as degrees, minutes, or seconds. Signs will be consistent.
    *
-   * @param field
-   *        One of the field constants specifying the field to be
-   *        retrieved.
+   * <p>Throws NullPointerException if field is not provided.
+   *
+   * @param field One of the field constants specifying the field to be retrieved.
    * @return Value of the specified field.
    */
-  public final int getField(final Field field)
-  {
-    if (sexagesimalDegreeParts == null)
-    {
+  public final int getField(final Field field) {
+    if (sexagesimalDegreeParts == null) {
       sexagesimalDegreeParts = sexagesimalSplit(getDegrees());
     }
     return sexagesimalDegreeParts[field.ordinal()];
@@ -320,8 +243,7 @@ public class Angle
    *
    * @return Value in radians.
    */
-  public final double getRadians()
-  {
+  public final double getRadians() {
     return radians;
   }
 
@@ -331,8 +253,7 @@ public class Angle
    * @see java.lang.Object#hashCode()
    */
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     final int prime = 31;
     int result = 1;
     long temp;
@@ -346,8 +267,7 @@ public class Angle
    *
    * @return Sine.
    */
-  public final double sin()
-  {
+  public final double sin() {
     return Math.sin(radians);
   }
 
@@ -357,8 +277,7 @@ public class Angle
    * @see java.lang.Object#toString()
    */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return format(AngleFormat.LONG);
   }
 
@@ -367,14 +286,12 @@ public class Angle
    *
    * @return Direction.
    */
-  protected String getDirection()
-  {
+  protected String getDirection() {
     return null;
   }
 
   private void readObject(final ObjectInputStream objectInputStream)
-    throws ClassNotFoundException, IOException
-  {
+      throws ClassNotFoundException, IOException {
     // Perform the default deserialization first
     objectInputStream.defaultReadObject();
 
@@ -383,21 +300,19 @@ public class Angle
   }
 
   /**
-   * Splits a double value into it's sexagesimal parts. Each part has
-   * the same sign as the provided value.
+   * Splits a double value into it's sexagesimal parts. Each part has the same sign as the provided
+   * value.
    *
-   * @param value
-   *        Value to split
+   * @param value Value to split
    * @return Split parts
    */
-  private int[] sexagesimalSplit(final double value)
-  {
+  private int[] sexagesimalSplit(final double value) {
     final double absValue = Math.abs(value);
 
     int units;
     int minutes;
     int seconds;
-    final int sign = value < 0? -1: 1;
+    final int sign = value < 0 ? -1 : 1;
 
     // Calculate absolute integer units
     units = (int) Math.floor(absValue);
@@ -405,8 +320,7 @@ public class Angle
 
     // Calculate absolute integer minutes
     minutes = seconds / 60; // Integer arithmetic
-    if (minutes == 60)
-    {
+    if (minutes == 60) {
       minutes = 0;
       units++;
     }
@@ -419,9 +333,6 @@ public class Angle
     minutes = minutes * sign;
     seconds = seconds * sign;
 
-    return new int[] {
-        units, minutes, seconds
-    };
+    return new int[] {units, minutes, seconds};
   }
-
 }
