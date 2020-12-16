@@ -19,6 +19,13 @@ jobs:
     - id: checkout-code
       name: Checkout code
       uses: actions/checkout@v2
+    - id: cache-m2
+      name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
     - id: setup-jdk
       name: Setup JDK
       uses: actions/setup-java@v1
