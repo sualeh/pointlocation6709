@@ -15,8 +15,7 @@
   <url>https://github.com/sualeh/pointlocation6709</url>
   <scm>
     <connection>scm:git:git@github.com:sualeh/pointlocation6709.git</connection>
-    <developerConnection>scm:git:git@github.com:sualeh/pointlocation6709.git</developerConnection>
-    <url>git@github.com:sualeh/pointlocation6709.git</url>
+    <url>https://github.com/sualeh/pointlocation6709</url>
   </scm>
   <distributionManagement>
     <snapshotRepository>
@@ -129,7 +128,7 @@
             <configuration>
               <quiet>true</quiet>
               <show>public</show>
-              <bottom>Copyright &#169; 2000-2020 {organizationName}. All rights reserved.</bottom>
+              <bottom>Copyright &#169; 2007-2020 {organizationName}. All rights reserved.</bottom>
               <doctitle>${project.name} ${project.version}</doctitle>
             </configuration>
           </execution>

@@ -43,6 +43,8 @@ jobs:
         echo github.sha: ${{ github.sha }}
         mvn -v
         cat ~/.m2/settings.xml
+        echo "Generated settings.xml"
+        cat $GITHUB_WORKSPACE/settings.xml
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
     - id: create-release
@@ -84,4 +86,5 @@ jobs:
           -Dmaven.javadoc.skip=false \
           -Dskip.signing.artifacts=false \
           -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} \
+          -s $GITHUB_WORKSPACE/settings.xml \
           clean deploy
