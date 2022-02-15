@@ -19,6 +19,7 @@ jobs:
       uses: actions/setup-java@v2.5.0
       with:
         java-version: 8
+        distribution: temurin
     - id: cache-m2
       name: Cache Maven packages
       uses: actions/cache@v2

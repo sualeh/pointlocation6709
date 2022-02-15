@@ -31,6 +31,7 @@ jobs:
       uses: actions/setup-java@v2.5.0
       with:
         java-version: 8
+        distribution: temurin
         server-id: sonatype-nexus
         server-username: MAVEN_USERNAME
         server-password: MAVEN_PASSWORD
