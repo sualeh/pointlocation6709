@@ -16,22 +16,16 @@ jobs:
     steps:
 
 # SETUP BUILD ENVIRONMENT
-    - id: cache-m2
-      name: Cache Maven packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
     - id: checkout-code
       name: Checkout code
       uses: actions/checkout@v3
     - id: setup-jdk
       name: Setup JDK
-      uses: actions/setup-java@v3.7.0
+      uses: actions/setup-java@v3
       with:
         java-version: 8
         distribution: temurin
+        cache: maven
         server-id: sonatype-nexus
         server-username: MAVEN_USERNAME
         server-password: MAVEN_PASSWORD
