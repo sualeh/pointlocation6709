@@ -1,7 +1,7 @@
 /*
  * Point Location 6709
  * http://github.com/sualeh/pointlocation6709
- * Copyright (c) 2007-2020, Sualeh Fatehi.
+ * Copyright (c) 2007-2025, Sualeh Fatehi.
  */
 package us.fatehi.pointlocation6709.parse;
 
@@ -48,7 +48,9 @@ public final class CoordinateParser {
       this.sign = sign;
     }
 
-    /** @return the sign */
+    /**
+     * @return the sign
+     */
     final int getSign() {
       return sign;
     }

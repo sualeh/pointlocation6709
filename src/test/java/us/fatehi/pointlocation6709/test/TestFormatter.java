@@ -1,7 +1,7 @@
 /*
  * Point Location 6709
  * http://github.com/sualeh/pointlocation6709
- * Copyright (c) 2007-2020, Sualeh Fatehi.
+ * Copyright (c) 2007-2025, Sualeh Fatehi.
  */
 
 package us.fatehi.pointlocation6709.test;
@@ -35,7 +35,9 @@ public class TestFormatter {
     final PointLocationFormatType format = PointLocationFormatType.DECIMAL;
     assertThat(formatPointLocation(pointLocation[0], format), is("+40.20365-075.00420/"));
     assertThat(formatPointLocation(pointLocation[1], format), is("+40.20365-075.00000+23.23000/"));
-    assertThat(formatPointLocation(pointLocation[2], format), is("+40.20365-075.00000-13.13000CRScustom/"));
+    assertThat(
+        formatPointLocation(pointLocation[2], format),
+        is("+40.20365-075.00000-13.13000CRScustom/"));
   }
 
   @Test
@@ -66,7 +68,8 @@ public class TestFormatter {
     final PointLocationFormatType format = PointLocationFormatType.LONG;
     assertThat(formatPointLocation(pointLocation[0], format), is("+401213-0750015/"));
     assertThat(formatPointLocation(pointLocation[1], format), is("+401213-0750000+23.23000/"));
-    assertThat(formatPointLocation(pointLocation[2], format), is("+401213-0750000-13.13000CRScustom/"));
+    assertThat(
+        formatPointLocation(pointLocation[2], format), is("+401213-0750000-13.13000CRScustom/"));
   }
 
   @Test
