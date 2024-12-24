@@ -19,9 +19,9 @@ To use *Point Location 6709* in your Maven build, include the following dependen
 
 ```xml
 <dependency>
-    <groupId>us.fatehi</groupId>
-    <artifactId>pointlocation6709</artifactId>
-    <version>4.2.1</version>
+  <groupId>us.fatehi</groupId>
+  <artifactId>pointlocation6709</artifactId>
+  <version>4.2.2/version>
 </dependency>
 ```
 
