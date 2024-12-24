@@ -278,8 +278,12 @@
         <extensions>true</extensions>
         <configuration>
           <serverId>sonatype-nexus</serverId>
-          <nexusUrl>https://oss.sonatype.org</nexusUrl>
+          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
+          <keepStagingRepositoryOnFailure>true</keepStagingRepositoryOnFailure>
+          <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
+          <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
+          <stagingProgressPauseDurationSeconds>10</stagingProgressPauseDurationSeconds>
         </configuration>
       </plugin>
     </plugins>
