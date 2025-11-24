@@ -1,9 +1,11 @@
 /*
  * Point Location 6709
  * http://github.com/sualeh/pointlocation6709
- * Copyright (c) 2007-2025, Sualeh Fatehi.
+ * Copyright (c) 2007-2026, Sualeh Fatehi.
  */
 package us.fatehi.pointlocation6709;
+
+import java.io.Serial;
 
 /**
  * Represents a longitude in degrees or radians.
@@ -12,7 +14,7 @@ package us.fatehi.pointlocation6709;
  */
 public final class Longitude extends Angle {
 
-  private static final long serialVersionUID = -8615691791807614256L;
+  @Serial private static final long serialVersionUID = -8615691791807614256L;
 
   /**
    * Copy constructor. Copies the value of a provided angle.

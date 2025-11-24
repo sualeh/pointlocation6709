@@ -1,7 +1,11 @@
-# Point Location 6709 
+<!-- markdownlint-disable MD040 MD041 MD004 MD012 -->
+**:star: Star it :arrow_heading_up: if you love it!**
 
 [![Quick Build](https://github.com/sualeh/pointlocation6709/actions/workflows/quick-build.yml/badge.svg)](https://github.com/sualeh/pointlocation6709/actions/workflows/quick-build.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/us.fatehi/pointlocation6709.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20pointlocation6709)
+
+
+# Point Location 6709 
 
 *Point Location 6709* is a Java representation of [ISO 6709] geographic point location by coordinates. 
 
@@ -21,7 +25,7 @@ To use *Point Location 6709* in your Maven build, include the following dependen
 <dependency>
   <groupId>us.fatehi</groupId>
   <artifactId>pointlocation6709</artifactId>
-  <version>4.2.2/version>
+  <version>5.0.1/version>
 </dependency>
 ```
 

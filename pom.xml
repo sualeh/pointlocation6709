@@ -1,16 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>us.fatehi</groupId>
   <artifactId>pointlocation6709</artifactId>
-  <version>4.2.2</version>
+  <version>5.0.1</version>
   <packaging>jar</packaging>
+
   <name>Point Location 6709</name>
   <description>Point Location 6709 is a Java library for parsing
     and formatting geographic point locations in ISO 6709
     format.</description>
+
   <url>https://github.com/sualeh/pointlocation6709</url>    
+  <organization>
+    <name>Sualeh Fatehi</name>
+  </organization>
   <licenses>
     <license>
       <name>Eclipse Public License - v 1.0</name>
@@ -33,9 +39,6 @@
       <timezone>-5</timezone>
     </developer>
   </developers>
-  <organization>
-    <name>Sualeh Fatehi</name>
-  </organization>
   <scm>
     <url>https://github.com/sualeh/pointlocation6709</url>
     <connection>scm:git:git@github.com:sualeh/pointlocation6709.git</connection>
@@ -56,7 +59,7 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>5.13.4</version>
+      <version>6.0.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -114,7 +117,10 @@
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.12.0</version>
           <configuration>
-            <source>8</source>
+            <encoding>UTF-8</encoding>
+            <docencoding>UTF-8</docencoding>
+            <charset>UTF-8</charset>
+            <source>17</source>
           </configuration>
         </plugin>
         <plugin>
@@ -133,9 +139,9 @@
           <version>3.1.4</version>
         </plugin>
         <plugin>
-          <groupId>org.sonatype.plugins</groupId>
-          <artifactId>nexus-staging-maven-plugin</artifactId>
-          <version>1.7.0</version>
+          <groupId>org.sonatype.central</groupId>
+          <artifactId>central-publishing-maven-plugin</artifactId>
+          <version>0.9.0</version>
         </plugin>
         <plugin>
           <groupId>org.jacoco</groupId>
@@ -154,6 +160,7 @@
               <directory>.</directory>
               <includes>
                 <include>pom.xml.versionsBackup</include>
+                <include>dependency-reduced-pom.xml</include>
               </includes>
             </fileset>
           </filesets>
@@ -164,9 +171,12 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>8</source>
-          <target>8</target>
+          <compilerArgs>
+            <arg>-parameters</arg>
+            <arg>-g</arg>
+          </compilerArgs>
           <encoding>UTF-8</encoding>
+          <release>17</release>
         </configuration>
       </plugin>
       <plugin>
@@ -221,7 +231,7 @@
               <additionalOptions>
                 <additionalOption>-Xdoclint:none</additionalOption>
               </additionalOptions>
-              <bottom>Copyright © 2014-2025 {organizationName}. All
+              <bottom>Copyright © 2014-2026 {organizationName}. All
                 rights reserved.</bottom>
               <doctitle>${project.name} ${project.version}</doctitle>
             </configuration>
@@ -269,21 +279,13 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
         <extensions>true</extensions>
         <configuration>
-          <serverId>sonatype-nexus</serverId>
-          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-          <keepStagingRepositoryOnFailure>true</keepStagingRepositoryOnFailure>
-          <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
-          <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
-          <stagingProgressPauseDurationSeconds>10</stagingProgressPauseDurationSeconds>
+          <publishingServerId>central</publishingServerId>
+          <autoPublish>true</autoPublish>
+          <waitUntil>validated</waitUntil>
         </configuration>
       </plugin>
     </plugins>

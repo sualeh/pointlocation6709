@@ -1,9 +1,11 @@
 /*
  * Point Location 6709
  * http://github.com/sualeh/pointlocation6709
- * Copyright (c) 2007-2025, Sualeh Fatehi.
+ * Copyright (c) 2007-2026, Sualeh Fatehi.
  */
 package us.fatehi.pointlocation6709.parse;
+
+import java.io.Serial;
 
 /**
  * Parser exception.
@@ -12,7 +14,7 @@ package us.fatehi.pointlocation6709.parse;
  */
 public class ParserException extends Exception {
 
-  private static final long serialVersionUID = -8091140656979529951L;
+  @Serial private static final long serialVersionUID = -8091140656979529951L;
 
   /** Constructor. */
   public ParserException() {}
