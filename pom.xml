@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>us.fatehi</groupId>
   <artifactId>pointlocation6709</artifactId>
-  <version>4.2.2</version>
+  <version>5.0.1</version>
   <packaging>jar</packaging>
 
   <name>Point Location 6709</name>
