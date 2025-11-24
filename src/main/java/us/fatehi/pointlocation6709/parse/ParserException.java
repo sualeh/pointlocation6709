@@ -5,6 +5,8 @@
  */
 package us.fatehi.pointlocation6709.parse;
 
+import java.io.Serial;
+
 /**
  * Parser exception.
  *
@@ -12,7 +14,7 @@ package us.fatehi.pointlocation6709.parse;
  */
 public class ParserException extends Exception {
 
-  private static final long serialVersionUID = -8091140656979529951L;
+  @Serial private static final long serialVersionUID = -8091140656979529951L;
 
   /** Constructor. */
   public ParserException() {}

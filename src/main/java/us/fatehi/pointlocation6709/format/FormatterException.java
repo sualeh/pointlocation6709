@@ -5,6 +5,8 @@
  */
 package us.fatehi.pointlocation6709.format;
 
+import java.io.Serial;
+
 /**
  * Parser exception.
  *
@@ -12,7 +14,7 @@ package us.fatehi.pointlocation6709.format;
  */
 public class FormatterException extends Exception {
 
-  private static final long serialVersionUID = -8091140656979529951L;
+  @Serial private static final long serialVersionUID = -8091140656979529951L;
 
   /** Constructor. */
   public FormatterException() {}

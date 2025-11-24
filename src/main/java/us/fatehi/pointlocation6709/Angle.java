@@ -7,6 +7,7 @@ package us.fatehi.pointlocation6709;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -59,7 +60,7 @@ public class Angle implements Serializable, Comparable<Angle> {
     }
   }
 
-  private static final long serialVersionUID = -6330836471692225095L;
+  @Serial private static final long serialVersionUID = -6330836471692225095L;
 
   /**
    * Static construction method, constructs an angle from the degree value provided.
@@ -195,11 +196,11 @@ public class Angle implements Serializable, Comparable<Angle> {
     final StringBuilder representation = new StringBuilder();
     final String direction = getDirection();
 
-    representation.append(String.format("%02d", absIntDegrees)).append(Field.DEGREES);
+    representation.append("%02d".formatted(absIntDegrees)).append(Field.DEGREES);
     if (format != AngleFormat.SHORT) {
-      representation.append(String.format("%02d", absIntMinutes)).append(Field.MINUTES);
+      representation.append("%02d".formatted(absIntMinutes)).append(Field.MINUTES);
       if (format != AngleFormat.MEDIUM) {
-        representation.append(String.format("%02d", absIntSeconds)).append(Field.SECONDS);
+        representation.append("%02d".formatted(absIntSeconds)).append(Field.SECONDS);
       }
     }
 

@@ -5,6 +5,8 @@
  */
 package us.fatehi.pointlocation6709;
 
+import java.io.Serial;
+
 /**
  * Represents a latitude in degrees or radians.
  *
@@ -12,7 +14,7 @@ package us.fatehi.pointlocation6709;
  */
 public final class Latitude extends Angle {
 
-  private static final long serialVersionUID = -1048509855080052523L;
+  @Serial private static final long serialVersionUID = -1048509855080052523L;
 
   /**
    * Copy constructor. Copies the value of a provided angle.

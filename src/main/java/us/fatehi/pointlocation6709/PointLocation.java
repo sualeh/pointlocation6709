@@ -5,9 +5,9 @@
  */
 package us.fatehi.pointlocation6709;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -19,7 +19,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public final class PointLocation implements Serializable, Comparable<PointLocation> {
 
-  private static final long serialVersionUID = 648363972954435138L;
+  @Serial private static final long serialVersionUID = 648363972954435138L;
 
   private final Latitude latitude;
   private final Longitude longitude;
@@ -178,7 +178,7 @@ public final class PointLocation implements Serializable, Comparable<PointLocati
   public String toString() {
     String string = latitude + " " + longitude;
     if (altitude != 0) {
-      string = string + " " + String.format("%1$.3f", altitude);
+      string = string + " " + "%1$.3f".formatted(altitude);
     }
     return string;
   }
